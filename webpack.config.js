@@ -16,7 +16,8 @@ let plugins = [
   new HTMLPlugin({template: `${__dirname}/src/index.html`}),
   new DefinePlugin({
     __DEBUG__: JSON.stringify(!production),
-    __API_URL__: JSON.stringify(process.env.API_URL),
+    __APP_ID__: JSON.stringify(process.env.APP_ID),
+    __API_TOKEN__: JSON.stringify(process.env.API_TOKEN),
   }),
 ];
 

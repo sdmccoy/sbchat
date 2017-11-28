@@ -8,5 +8,3 @@ ReactDOM.render(
     <Route exact path='*' component={App} />
   </BrowserRouter>), document.getElementById('root')
 );
-
-// ReactDOM.render(<App />, document.getElementById('root'));
