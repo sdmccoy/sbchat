@@ -33,7 +33,7 @@ class Signin extends React.Component{
 
     sb.connect(currentUser.state.userID, __API_TOKEN__, function(user, error){
       if(error) console.error(error);
-      //set user state to app store
+      //set user state to app store through redux
       currentUser.props.userSignin(user);
     });
   }
