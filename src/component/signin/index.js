@@ -1,6 +1,7 @@
 import React from 'react';
 import SendBird from 'sendbird';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import * as userActions from '../../action/user.js';
 
 //connect to the sb client.
@@ -15,6 +16,7 @@ class Signin extends React.Component{
       username: '',
       userID: '',
       errMsg: '',
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,12 +37,15 @@ class Signin extends React.Component{
       if(error) console.error(error);
       //set user state to app store through redux
       currentUser.props.userSignin(user);
+      currentUser.setState({redirect: true});
     });
   }
 
 
 
   render(){
+    const {redirect} = this.state;
+    if(redirect) {return <Redirect to='/main'/>;}
     return(
       <div className='signin-container'>
         <h2>Signin to Chat</h2>
