@@ -1,5 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import SendBird from 'sendbird';
+import * as openChannelActions from '../../../action/open-channel.js';
+
 //connect to the sb client.
 const sb = new SendBird({
   appId: __APP_ID__,
@@ -11,7 +14,7 @@ class CreateChannel extends React.Component{
     this.state = {
       showChannelForm: false,
       channelName: '',
-      description: '',
+      data: '',
       coverURL: null,
     };
     this.handleShowChannelForm = this.handleShowChannelForm.bind(this);
@@ -32,15 +35,11 @@ class CreateChannel extends React.Component{
     e.preventDefault();
     //set to current instance to pass in props & state
     let currentChannel = this;
-    currentChannel.state.data = currentChannel.state.description;
-    delete currentChannel.state.description;
-    console.log('this channel state= ', currentChannel.state);
 
     sb.OpenChannel.createChannel(currentChannel.state.channelName, currentChannel.state.coverURL, currentChannel.state.data, function(createdChannel, error){
       if(error) console.error(error);
-      console.log('createChannel = ', createdChannel);
       //set channel state to app store through redux
-      // currentChannel.props.userSignin(user);
+      currentChannel.props.createOpenChannel(createdChannel);
     });
   }
 
@@ -60,7 +59,7 @@ class CreateChannel extends React.Component{
               value={this.state.userID}
             />
             <input
-              name='description'
+              name='data'
               type='text'
               placeholder='Description'
               onChange={this.handleChange}
@@ -77,4 +76,13 @@ class CreateChannel extends React.Component{
   }
 }
 
-export default CreateChannel;
+
+const mapStateToProps = state => ({
+  openChannel: state.openChannel,
+});
+
+const mapDispatchToProps = dispatch => ({
+  createOpenChannel: channel => dispatch(openChannelActions.createOpenChannel(channel)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateChannel);
