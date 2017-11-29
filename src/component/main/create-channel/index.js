@@ -15,6 +15,7 @@ class CreateChannel extends React.Component{
       showChannelForm: false,
       channelName: '',
       data: '',
+      //can add feature later, default pic is added by sb
       coverURL: null,
     };
     this.handleShowChannelForm = this.handleShowChannelForm.bind(this);
@@ -33,10 +34,12 @@ class CreateChannel extends React.Component{
   //create channel from form
   handleSubmit(e){
     e.preventDefault();
+    this.handleShowChannelForm();
     //set to current instance to pass in props & state
     let currentChannel = this;
+    let {channelName, coverURL, data} = currentChannel.state;
 
-    sb.OpenChannel.createChannel(currentChannel.state.channelName, currentChannel.state.coverURL, currentChannel.state.data, function(createdChannel, error){
+    sb.OpenChannel.createChannel(channelName, coverURL, data, function(createdChannel, error){
       if(error) console.error(error);
       //set channel state to app store through redux
       currentChannel.props.createOpenChannel(createdChannel);
