@@ -1,7 +1,7 @@
 import React from 'react';
 import SendBird from 'sendbird';
 import {connect} from 'react-redux';
-import * as userActions from '../../../action/user.js';
+import * as userActions from '../../action/user.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -41,7 +41,6 @@ class Signin extends React.Component{
 
 
   render(){
-    console.log();
     return(
       <div className='signin-container'>
         <h2>Signin to Chat</h2>
