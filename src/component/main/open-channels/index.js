@@ -15,6 +15,7 @@ class OpenChannels extends React.Component{
     super(props);
     this.state = {
     };
+    this.enterChannel = this.enterChannel.bind(this);
   }
 
   //user signs in first then make query for channels
@@ -30,6 +31,19 @@ class OpenChannels extends React.Component{
     });
   }
 
+  enterChannel(channel){
+    console.log('EC chan = ', channel);
+    sb.OpenChannel.getChannel(channel.url, (channel, error) => {
+      if(error) console.error(error);
+
+      console.log('found channel =', channel);
+      channel.enter((response, error) => {
+        if(error) console.error(error);
+        console.log('chan response =', response);
+      });
+    });
+  }
+
   render(){
     console.log('this.props.chan render = ', this.props.openChannels);
     return(
@@ -37,7 +51,9 @@ class OpenChannels extends React.Component{
       hello Open Channels
         {this.props.openChannels.length > 0 ?
           this.props.openChannels.map((channel, i) => {
-            return <div className='open-channel' key={i}>
+            return <div className='open-channel' key={i}
+              onClick={() => this.enterChannel(channel)}
+            >
               <h3>{channel.name}</h3>
               <h5>{channel.data}</h5>
             </div>;
