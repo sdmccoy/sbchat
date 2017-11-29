@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
+import * as openChannelActions from '../../../action/open-channel.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -14,40 +15,23 @@ class OpenChannels extends React.Component{
     super(props);
     this.state = {
     };
-    this.fetchOpenChannels = this.fetchOpenChannels.bind(this);
   }
 
-  fetchOpenChannels(channels){
-
-  }
   //user signs in first then make query for channels
   //what if making queries every time this comp gets props?
 
   componentWillMount(){
-    // console.log('this', this);
-    // openChannelListQuery.next((channels, error) => {
-    // console.log('this props ahahah = ', this.props);
-    // if(error) return console.error(error);
-    // });
-  }
-  componentWillReceiveProps(props){
-    // console.log('break');
-    console.log('CWR props = ', props);
-    // props.user.length > 0 ?
-    // openChannelListQuery.next((channels, error) => {
-    // console.log('error = ', error);
-    // console.log('props inside = ', props);
-    // if(error) reject(console.error(error));
-    // console.log('channels = ', channels);
-    // return channels;
-    // });
-    // :
-    // undefined;
+    console.log('this', this);
+    openChannelListQuery.next((channels, error) => {
+      console.log('this props ahahah = ', this.props);
+      if(error) return console.error(error);
+      console.log('channels on mount= ', channels);
+      this.props.fetchOpenChannels(channels);
+    });
   }
 
   render(){
-    console.log('this.props render = ', this.props.openChannels);
-    console.log('new looooooog');
+    console.log('this.props.chan render = ', this.props.openChannels);
     return(
       <div className='open-channels-container'>
       hello Open Channels
@@ -72,6 +56,8 @@ const mapStateToProps = state => ({
   openChannels: state.openChannels,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpenChannels);

@@ -4,7 +4,10 @@ export default (state=[], action) => {
   switch (type) {
   case 'CREATE_OPENCHANNEL':
     return [payload, ...state];
-    
+
+  case 'FETCH_OPENCHANNELS':
+    return payload;
+
   default: return state;
   }
 };
