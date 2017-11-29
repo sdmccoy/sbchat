@@ -1,5 +1,7 @@
 import React from 'react';
 import SendBird from 'sendbird';
+import {connect} from 'react-redux';
+import * as userActions from '../../../action/user.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -11,6 +13,8 @@ class Signin extends React.Component{
     super(props);
     this.state = {
       username: '',
+      userID: '',
+      errMsg: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,29 +28,29 @@ class Signin extends React.Component{
   //connect user from form
   handleSubmit(e){
     e.preventDefault();
-    console.log('event = ', e.target.username);
-    let userId = e.target.username.value;
-    sb.connect(userId, function(user, error){
-      console.log('user = ', user);
-      console.log('error = ', error);
-    });
+    //set to current instance to pass in props & state
+    let currentUser = this;
 
+    sb.connect(currentUser.state.userID, __API_TOKEN__, function(user, error){
+      if(error) console.error(error);
+      //set user state to app store
+      currentUser.props.userSignin(user);
+    });
   }
 
 
 
   render(){
-    console.log('sb =', sb);
     return(
       <div className='signin-container'>
         <h2>Signin to Chat</h2>
         <form onSubmit={this.handleSubmit}>
           <input
-            name='username'
+            name='userID'
             type='text'
-            placeholder='username'
+            placeholder='userID'
             onChange={this.handleChange}
-            value={this.state.username}
+            value={this.state.userID}
           />
           <button className="login-button" type="submit">Signin</button>
         </form>
@@ -55,4 +59,13 @@ class Signin extends React.Component{
   }
 }
 
-export default Signin;
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch => ({
+  userSignin: user => dispatch(userActions.userSignin(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signin);
