@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
+import * as userActions from '../../../action/user.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -45,7 +46,7 @@ class Profile extends React.Component{
       console.log('error = ', error);
       if(error) console.error(error);
       //if no error, set user state to app store
-      
+      currentUser.props.editUserProfile(response);
     });
     // sb.OpenChannel.createChannel(channelName, coverURL, data, function(createdChannel, error){
     //   if(error) console.error(error);
@@ -95,6 +96,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  editUserProfile: user => dispatch(userActions.editUserProfile(user)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
