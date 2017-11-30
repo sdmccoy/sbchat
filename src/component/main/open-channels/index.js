@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import * as openChannelActions from '../../../action/open-channel.js';
+import * as userActions from '../../../action/user.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -14,6 +15,7 @@ class OpenChannels extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+      participantList: [],
     };
     this.enterChannel = this.enterChannel.bind(this);
   }
@@ -32,20 +34,29 @@ class OpenChannels extends React.Component{
   }
 
   enterChannel(channel){
-    console.log('EC chan = ', channel);
+    // console.log('EC chan = ', channel);
     sb.OpenChannel.getChannel(channel.url, (channel, error) => {
       if(error) console.error(error);
 
-      console.log('found channel =', channel);
+      // console.log('found channel =', channel);
       channel.enter((response, error) => {
         if(error) console.error(error);
-        console.log('chan response =', response);
+        // console.log('entered channel =', channel);
+
+        // console.log('chan response =', response);
+        let participantListQuery = channel.createParticipantListQuery();
+        participantListQuery.next((participantList, error) => {
+          if (error) console.error(error);
+          // console.log('part list =', participantList);
+          this.setState({participantList: participantList});
+        });
       });
     });
   }
 
   render(){
-    console.log('this.props.chan render = ', this.props.openChannels);
+    // console.log('this.props.chan render = ', this.props.openChannels);
+    // console.log('this.state = ', this.state);
     return(
       <div className='open-channels-container'>
       hello Open Channels
@@ -74,6 +85,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
+  setParticipantList: channel => dispatch(userActions.setParticipantList(channel)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpenChannels);

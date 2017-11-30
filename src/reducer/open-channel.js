@@ -8,6 +8,9 @@ export default (state=[], action) => {
   case 'FETCH_OPENCHANNELS':
     return payload;
 
+  case 'SET_ACTIVECHANNEL':
+    return [payload, ...state];
+
   default: return state;
   }
 };

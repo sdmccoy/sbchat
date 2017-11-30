@@ -9,10 +9,9 @@ import Main from '../main';
 const store = appStoreCreate();
 
 class App extends React.Component{
-  // <Signin />
-  // <Main />
 
   render(){
+  
     return(
       <Provider store={store}>
         <div className='app-container'>
