@@ -3,7 +3,8 @@ export default (state = [], action) => {
 
   switch (type) {
   case 'SET_ENTEREDCHANNEL':
-    return [payload, ...state];
+    console.log('payload = ', payload);
+    return payload;
 
   default: return state;
   }
