@@ -8,8 +8,8 @@ export default (state=[], action) => {
   case 'FETCH_OPENCHANNELS':
     return payload;
 
-  case 'SET_ACTIVECHANNEL':
-    return [payload, ...state];
+  case 'DELETE_CHANNEL':
+    return state.filter(channel => channel.url !== payload);
 
   default: return state;
   }

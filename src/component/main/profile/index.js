@@ -37,26 +37,17 @@ class Profile extends React.Component{
     this.handleShowProfileForm();
     //set to current instance to pass in props & state
     let currentUser = this;
-    console.log('CU = ', currentUser);
     let {nickname, profileUrl} = currentUser.state;
 
     //update profile fn
     sb.updateCurrentUserInfo(nickname, profileUrl, (response, error) => {
-      console.log('response = ', response);
-      console.log('error = ', error);
       if(error) console.error(error);
       //if no error, set user state to app store
       currentUser.props.editUserProfile(response);
     });
-    // sb.OpenChannel.createChannel(channelName, coverURL, data, function(createdChannel, error){
-    //   if(error) console.error(error);
-    //   //set channel state to app store through redux
-    //   currentChannel.props.createOpenChannel(createdChannel);
-    // });
   }
 
   render(){
-    console.log('this.prop profile = ', this.props.user[0]);
     return(
       <div className='profile-container'>
         profile below here

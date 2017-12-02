@@ -26,7 +26,8 @@
   "globals": {
     "__APP_ID__": false,
     "__API_TOKEN__": false,
-    "__DEBUG__": false
+    "__DEBUG__": false,
+    "__API_CON__": false
   },
   "extends": [
     "eslint:recommended",
