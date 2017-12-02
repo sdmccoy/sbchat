@@ -3,6 +3,8 @@ import SendBird from 'sendbird';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import * as userActions from '../../action/user.js';
+//remove after dev session
+import * as openChannelActions from '../../action/open-channel.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -28,24 +30,37 @@ class Signin extends React.Component{
   }
 
   //connect user from form
+  //delete userID param after dev session
   handleSubmit(e){
     e.preventDefault();
     //set to current instance to pass in props & state
     let currentUser = this;
 
+    //change userID back to currentUser.state.userID after dev
     sb.connect(currentUser.state.userID, __API_TOKEN__, function(user, error){
       if(error) console.error(error);
       //set user state to app store through redux
       currentUser.props.userSignin(user);
       currentUser.setState({redirect: true});
     });
+
+
   }
 
 
-
   render(){
-    const {redirect} = this.state;
-    if(redirect) {return <Redirect to='/main'/>;}
+    //delete below after dev session
+    if(this.state.redirect){
+      const openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
+
+      openChannelListQuery.next((channels, error) => {
+        if(error) return console.error(error);
+        this.props.fetchOpenChannels(channels);
+      });
+    }
+    //uncomment after dev
+    // const {redirect} = this.state;
+    // if(redirect) {return <Redirect to='/main'/>;}
     return(
       <div className='signin-container'>
         <h2>Signin to Chat</h2>
@@ -71,6 +86,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   userSignin: user => dispatch(userActions.userSignin(user)),
+  //delete after dev session
+  fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);

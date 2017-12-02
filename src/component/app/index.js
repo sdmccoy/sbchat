@@ -11,13 +11,13 @@ const store = appStoreCreate();
 class App extends React.Component{
 
   render(){
-  
+    //change Main path to /main after dev session
     return(
       <Provider store={store}>
         <div className='app-container'>
           Hello World APP
           <Route exact path='/' component={Signin} />
-          <Route exact path='/main' component={Main} />
+          <Route exact path='/' component={Main} />
         </div>
       </Provider>
     );

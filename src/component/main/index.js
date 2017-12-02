@@ -6,13 +6,14 @@ import Chat from './chat';
 
 class Main extends React.Component{
   render(){
+    //move to end bottom after dev session
+    // <Profile />
     return(
       <div className='main-container'>
         hello Main testing
         <CreateChannel />
         <OpenChannels />
         <Chat />
-        <Profile />
       </div>
     );
   }
