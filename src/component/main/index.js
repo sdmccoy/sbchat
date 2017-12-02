@@ -2,6 +2,7 @@ import React from 'react';
 import CreateChannel from './create-channel';
 import OpenChannels from './open-channels';
 import Profile from './profile';
+import Chat from './chat';
 
 class Main extends React.Component{
   render(){
@@ -10,6 +11,7 @@ class Main extends React.Component{
         hello Main testing
         <CreateChannel />
         <OpenChannels />
+        <Chat />
         <Profile />
       </div>
     );
