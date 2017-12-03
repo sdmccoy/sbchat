@@ -38,14 +38,22 @@ class Chat extends React.Component{
         return;
       }
 
-      // onSent
       console.log('success msg = ', message);
+
+      //set channel handler for async concerns
+      let channelHandler = new sb.ChannelHandler();
+      sb.addChannelHandler('received message', channelHandler);
+      channelHandler.onMessageReceived(channel, message);
+      console.log('handler = ', channelHandler);
+      console.log('handler msg rec = ', channelHandler.onMessageReceived);
+
+      //remove handler after event
+      sb.removeChannelHandler('received message');
     });
 
   }
 
   render(){
-    console.log('chat props = ', this.props);
     return(
       <div className='chat-container'>
       hello CHAT
