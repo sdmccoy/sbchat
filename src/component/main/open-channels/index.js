@@ -5,6 +5,7 @@ import * as openChannelActions from '../../../action/open-channel.js';
 import * as userActions from '../../../action/user.js';
 import * as enteredChannelActions from '../../../action/entered-channel.js';
 import * as channelParticipantActions from '../../../action/participant-list.js';
+import * as channelMessageActions from '../../../action/message.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -21,7 +22,7 @@ class OpenChannels extends React.Component{
     this.enterChannel = this.enterChannel.bind(this);
     this.handleChannelDelete = this.handleChannelDelete.bind(this);
     this.fetchParticipantList = this.fetchParticipantList.bind(this);
-    // this.fetchPreviousMessageList = this.fetchPreviousMessageList.bind(this);
+    this.fetchPreviousMessageList = this.fetchPreviousMessageList.bind(this);
   }
 
   //user signs in first then make query for channels
@@ -49,6 +50,7 @@ class OpenChannels extends React.Component{
         this.props.setEnteredChannel(channel);
         //fetch the current participantList to append later
         this.fetchParticipantList(channel);
+        this.fetchPreviousMessageList(channel);
       });
     });
   }
@@ -58,6 +60,16 @@ class OpenChannels extends React.Component{
     participantListQuery.next((participantList, error) => {
       if (error) return console.error(error);
       this.props.setParticipantList(participantList);
+    });
+  }
+
+  fetchPreviousMessageList(channel){
+    var messageListQuery = channel.createPreviousMessageListQuery();
+
+    messageListQuery.load(30, true, (messageList, error) => {
+      if (error) return console.error(error);
+      console.log('success msg list = ', messageList);
+      this.props.setPreviousMessageList(messageList);
     });
   }
 
@@ -114,6 +126,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
   setParticipantList: participantList => dispatch(channelParticipantActions.setParticipantList(participantList)),
+  setPreviousMessageList: previousMessages => dispatch(channelMessageActions.setPreviousMessageList(previousMessages)),
   deleteChannelRequest: channel => dispatch(openChannelActions.deleteChannelRequest(channel)),
   setEnteredChannel: channel => dispatch(enteredChannelActions.setEnteredChannel(channel)),
 });

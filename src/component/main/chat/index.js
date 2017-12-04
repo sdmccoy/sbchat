@@ -65,9 +65,21 @@ class Chat extends React.Component{
   }
 
   render(){
+    console.log('thisprops msg = ', this.props.messageList);
     return(
       <div className='chat-container'>
       hello CHAT
+        <div className='message-board'>
+        hello Message board
+          {this.props.messageList.length > 0 ?
+            this.props.messageList.map((message, i) => {
+              {console.log('message = ', message);}
+              return <div key={i}>{message.message}</div>;
+            })
+            :
+            <h5>No previous messages, start a conversation!</h5>
+          }
+        </div>
         <form onSubmit={this.handleSubmit}>
           <input
             name='message'
@@ -85,6 +97,7 @@ class Chat extends React.Component{
 
 const mapStateToProps = state => ({
   enteredChannel: state.enteredChannel,
+  messageList: state.messages,
 });
 
 const mapDispatchToProps = dispatch => ({});
