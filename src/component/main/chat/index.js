@@ -40,12 +40,23 @@ class Chat extends React.Component{
 
       console.log('success msg = ', message);
 
+      var ChannelHandler = new sb.ChannelHandler();
+
+      ChannelHandler.onMessageReceived = function(channel, message){
+        console.log('handler channel = ', channel);
+        console.log('handler message = ', message);
+        // console.log(channel, message);
+      };
+
+      ChannelHandler.onMessageReceived(channel, message);
+
+      sb.addChannelHandler('received message', ChannelHandler);
       //set channel handler for async concerns
-      let channelHandler = new sb.ChannelHandler();
-      sb.addChannelHandler('received message', channelHandler);
-      channelHandler.onMessageReceived(channel, message);
-      console.log('handler = ', channelHandler);
-      console.log('handler msg rec = ', channelHandler.onMessageReceived);
+      // let channelHandler = new sb.ChannelHandler();
+      // sb.addChannelHandler('received message', channelHandler);
+      // channelHandler.onMessageReceived(channel, message);
+      // console.log('handler = ', channelHandler);
+      // console.log('handler msg rec = ', channelHandler.onMessageReceived);
 
       //remove handler after event
       sb.removeChannelHandler('received message');

@@ -4,6 +4,7 @@ import SendBird from 'sendbird';
 import * as openChannelActions from '../../../action/open-channel.js';
 import * as userActions from '../../../action/user.js';
 import * as enteredChannelActions from '../../../action/entered-channel.js';
+import setParticipantList from '../../../participant-list.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -15,12 +16,12 @@ const openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 class OpenChannels extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      participantList: [],
-      enteredChannels: [],
-    };
+    this.channel = null;
+
     this.enterChannel = this.enterChannel.bind(this);
     this.handleChannelDelete = this.handleChannelDelete.bind(this);
+    this.fetchParticipantList = this.fetchParticipantList.bind(this);
+    // this.fetchPreviousMessageList = this.fetchPreviousMessageList.bind(this);
   }
 
   //user signs in first then make query for channels
@@ -40,17 +41,24 @@ class OpenChannels extends React.Component{
       channel.enter((response, error) => {
         if(error) console.error(error);
         console.log('entered channel =', channel);
-        // console.log('active channel = ', Chat.activeChannel);
-        this.props.setEnteredChannel(channel);
-        // this.setState({enteredChannels: [channel, ...this.state.enteredChannels]});
 
-        let participantListQuery = channel.createParticipantListQuery();
-        participantListQuery.next((participantList, error) => {
-          if (error) console.error(error);
-          // console.log('part list =', participantList);
-          this.setState({participantList: participantList});
-        });
+        //set state to current channel, this context
+        this.channel = channel;
+        //set app store to entered channel
+        this.props.setEnteredChannel(channel);
+        //fetch the current participantList to append later
+        this.fetchParticipantList(this.channel);
+
       });
+    });
+  }
+
+  fetchParticipantList(channel){
+    let participantListQuery = channel.createParticipantListQuery();
+    participantListQuery.next((participantList, error) => {
+      if (error) console.error(error);
+      console.log('part list =', participantList);
+      this.props.setParticipantList(participantList);
     });
   }
 
@@ -106,7 +114,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
-  setParticipantList: channel => dispatch(userActions.setParticipantList(channel)),
+  setParticipantList: participantList => dispatch(setParticipantList(participantList)),
   deleteChannelRequest: channel => dispatch(openChannelActions.deleteChannelRequest(channel)),
   setEnteredChannel: channel => dispatch(enteredChannelActions.setEnteredChannel(channel)),
 });
