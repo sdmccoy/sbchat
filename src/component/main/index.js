@@ -3,6 +3,7 @@ import CreateChannel from './create-channel';
 import OpenChannels from './open-channels';
 import Profile from './profile';
 import Chat from './chat';
+import ParticipantList from './participant-list';
 
 class Main extends React.Component{
   render(){
@@ -14,6 +15,7 @@ class Main extends React.Component{
         <CreateChannel />
         <OpenChannels />
         <Chat />
+        <ParticipantList />
       </div>
     );
   }

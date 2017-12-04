@@ -49,6 +49,7 @@ class CreateChannel extends React.Component{
   render(){
     return(
       <div className='create-channel-container'>
+      Hello Create channel
         <button onClick={this.handleShowChannelForm}>
           + Channel
         </button>
@@ -73,7 +74,6 @@ class CreateChannel extends React.Component{
           : undefined
         }
 
-      Hello Create channel
       </div>
     );
   }

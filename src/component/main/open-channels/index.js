@@ -4,7 +4,7 @@ import SendBird from 'sendbird';
 import * as openChannelActions from '../../../action/open-channel.js';
 import * as userActions from '../../../action/user.js';
 import * as enteredChannelActions from '../../../action/entered-channel.js';
-import setParticipantList from '../../../participant-list.js';
+import * as channelParticipantActions from '../../../action/participant-list.js';
 
 //connect to the sb client.
 const sb = new SendBird({
@@ -44,11 +44,11 @@ class OpenChannels extends React.Component{
 
         //set state to current channel, this context
         this.channel = channel;
+        console.log('thischannel = ', this.channel);
         //set app store to entered channel
         this.props.setEnteredChannel(channel);
         //fetch the current participantList to append later
-        this.fetchParticipantList(this.channel);
-
+        this.fetchParticipantList(channel);
       });
     });
   }
@@ -56,8 +56,7 @@ class OpenChannels extends React.Component{
   fetchParticipantList(channel){
     let participantListQuery = channel.createParticipantListQuery();
     participantListQuery.next((participantList, error) => {
-      if (error) console.error(error);
-      console.log('part list =', participantList);
+      if (error) return console.error(error);
       this.props.setParticipantList(participantList);
     });
   }
@@ -114,7 +113,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
-  setParticipantList: participantList => dispatch(setParticipantList(participantList)),
+  setParticipantList: participantList => dispatch(channelParticipantActions.setParticipantList(participantList)),
   deleteChannelRequest: channel => dispatch(openChannelActions.deleteChannelRequest(channel)),
   setEnteredChannel: channel => dispatch(enteredChannelActions.setEnteredChannel(channel)),
 });
