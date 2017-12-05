@@ -38,6 +38,7 @@ class OpenChannels extends React.Component{
     this.channel = channel;
 
     let addNewMessage = this.props.addNewMessage;
+    let updateMessage = this.props.updateMessage;
 
     sb.OpenChannel.getChannel(channel.url, (channel, error) => {
       if(error) console.error(error);
@@ -52,6 +53,14 @@ class OpenChannels extends React.Component{
           console.log('handler message enter= ', message);
           //set app store for receiving user socket to see sent msg
           addNewMessage(message);
+        };
+
+        sb.addChannelHandler('received message', ChannelHandler);
+
+        ChannelHandler.onMessageUpdated = function(channel, message){
+          console.log('handler message enter update= ', message);
+          //set app store for receiving user socket to see sent msg
+          updateMessage(message);
         };
 
         sb.addChannelHandler('received message', ChannelHandler);
@@ -134,6 +143,7 @@ const mapDispatchToProps = dispatch => ({
   deleteChannelRequest: channel => dispatch(openChannelActions.deleteChannelRequest(channel)),
   setEnteredChannel: channel => dispatch(enteredChannelActions.setEnteredChannel(channel)),
   addNewMessage: message => dispatch(channelMessageActions.addNewMessage(message)),
+  updateMessage: message => dispatch(channelMessageActions.updateMessage(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpenChannels);

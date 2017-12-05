@@ -17,9 +17,9 @@ class Chat extends React.Component{
       customType: null,
       currentChannel: this.props.enteredChannel,
       showUpdateForm: false,
-      updateMessage: '',
-      updateData: null,
-      updateCustomType: null,
+      updatedMessage: '',
+      updatedData: null,
+      updatedCustomType: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,24 +72,19 @@ class Chat extends React.Component{
   }
 
   handleMessageUpdate(message){
-    // e.preventDefault();
-    console.log('message = ', message);
+
     let channel = this.state.currentChannel;
+    let {updatedMessage, updatedData, updatedCustomType} = this.state;
+    let updateMessage = this.props.updateMessage;
 
-    let {updateMessage, updateData, updateCustomType} = this.state;
-    console.log('update message = ', updateMessage);
-
-    channel.updateUserMessage(message.messageId, updateMessage, updateData, updateCustomType, function(userMessage, error) {
+    channel.updateUserMessage(message.messageId, updatedMessage, updatedData, updatedCustomType, function(userMessage, error) {
       if (error) return console.error(error);
-
-      console.log('user message =', userMessage);
-      //update app store state
-      // updateMessage(message);
+      //update app store state for sender socket
+      updateMessage(userMessage);
     });
   }
 
   render(){
-    console.log('this render = ', this);
     let {messageList, user} = this.props;
     return(
       <div className='chat-container'>
@@ -110,11 +105,11 @@ class Chat extends React.Component{
                       <div>
                         <form >
                           <input
-                            name='updateMessage'
+                            name='updatedMessage'
                             type='text'
                             placeholder='Type Update Here'
                             onChange={this.handleChange}
-                            value={this.state.updateMessage}
+                            value={this.state.updatedMessage}
                           />
                         </form>
                         <button className="update-message-button"
@@ -159,6 +154,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addNewMessage: message => dispatch(channelMessageActions.addNewMessage(message)),
   deleteMessage: message => dispatch(channelMessageActions.deleteMessage(message)),
-  // updateMessage: message => dispatch(channelMessageActions.updateMessage(message)),
+  updateMessage: message => dispatch(channelMessageActions.updateMessage(message)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);
