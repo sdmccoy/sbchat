@@ -17,11 +17,15 @@ class Chat extends React.Component{
       customType: null,
       currentChannel: this.props.enteredChannel,
       showUpdateForm: false,
+      updateMessage: '',
+      updateData: null,
+      updateCustomType: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMessageDelete = this.handleMessageDelete.bind(this);
     this.showUpdateForm = this.showUpdateForm.bind(this);
+    this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
   }
 
   //once user enters, set chat state to current channel instance
@@ -67,23 +71,25 @@ class Chat extends React.Component{
     this.state.showUpdateForm ? this.setState({showUpdateForm: false}) : this.setState({showUpdateForm: true});
   }
 
-  handleMessageUpdate(e){
-    e.preventDefault();
-    console.log('this.state = ', this.state);
+  handleMessageUpdate(message){
+    // e.preventDefault();
+    console.log('message = ', message);
     let channel = this.state.currentChannel;
-    let updateMessage = this.props.updateMessage;
-    // let {messageId, data, customType} = message;
-    //
-    // channel.updateUserMessage(messageId, message, data, customType, function(userMessage, error) {
-    //   if (error) return console.error(error);
-    //
-    //   console.log('user message =', userMessage);
-    //   //update app store state
-    //   // updateMessage(message);
-    // });
+
+    let {updateMessage, updateData, updateCustomType} = this.state;
+    console.log('update message = ', updateMessage);
+
+    channel.updateUserMessage(message.messageId, updateMessage, updateData, updateCustomType, function(userMessage, error) {
+      if (error) return console.error(error);
+
+      console.log('user message =', userMessage);
+      //update app store state
+      // updateMessage(message);
+    });
   }
 
   render(){
+    console.log('this render = ', this);
     let {messageList, user} = this.props;
     return(
       <div className='chat-container'>
@@ -101,18 +107,21 @@ class Chat extends React.Component{
                     Update
                     </button>
                     {this.state.showUpdateForm ?
-                      <form onSubmit={this.handleMessageUpdate}>
-                        <input
-                          name='message'
-                          type='text'
-                          placeholder='Type Message Here'
-                          onChange={this.handleChange}
-                          value={this.state.message}
-                        />
-                        <button className="send-message-button" type="submit">
-                        Send
+                      <div>
+                        <form >
+                          <input
+                            name='updateMessage'
+                            type='text'
+                            placeholder='Type Update Here'
+                            onChange={this.handleChange}
+                            value={this.state.updateMessage}
+                          />
+                        </form>
+                        <button className="update-message-button"
+                          onClick={() => this.handleMessageUpdate(message)}>
+                        Confirm
                         </button>
-                      </form>
+                      </div>
                       :
                       undefined
                     }
