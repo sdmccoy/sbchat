@@ -7,10 +7,9 @@ import * as enteredChannelActions from '../../../action/entered-channel.js';
 import * as channelParticipantActions from '../../../action/participant-list.js';
 import * as channelMessageActions from '../../../action/message.js';
 
-//connect to the sb client.
-const sb = new SendBird({
-  appId: __APP_ID__,
-});
+//importing sb object
+import * as client from '../../../lib/sb-object.js';
+let sb = client.sb;
 
 const openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 
@@ -39,8 +38,18 @@ class OpenChannels extends React.Component{
     sb.OpenChannel.getChannel(channel.url, (channel, error) => {
       if(error) console.error(error);
 
+
       channel.enter((response, error) => {
         if(error) console.error(error);
+        let ChannelHandler = new sb.ChannelHandler();
+
+        ChannelHandler.onMessageReceived = function(channel, message){
+          console.log('handler channel = ', channel);
+          console.log('handler message = ', message);
+          // console.log(channel, message);
+        };
+
+        sb.addChannelHandler('received message', ChannelHandler);
         console.log('entered channel =', channel);
 
         //set state to current channel, this context

@@ -3,10 +3,9 @@ import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import * as userActions from '../../../action/user.js';
 
-//connect to the sb client.
-const sb = new SendBird({
-  appId: __APP_ID__,
-});
+//importing sb object
+import * as client from '../../../lib/sb-object.js';
+let sb = client.sb;
 
 class Profile extends React.Component{
   constructor(props){

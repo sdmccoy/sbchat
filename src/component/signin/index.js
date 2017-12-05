@@ -6,10 +6,9 @@ import * as userActions from '../../action/user.js';
 //remove after dev session
 import * as openChannelActions from '../../action/open-channel.js';
 
-//connect to the sb client.
-const sb = new SendBird({
-  appId: __APP_ID__,
-});
+//importing sb object
+import * as client from '../../lib/sb-object.js';
+let sb = client.sb;
 
 class Signin extends React.Component{
   constructor(props){
