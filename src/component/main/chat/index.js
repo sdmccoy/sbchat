@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
+import UpdateMessageForm from '../update-message-form';
 import * as channelMessageActions from '../../../action/message.js';
 
 //importing sb object
@@ -16,16 +17,10 @@ class Chat extends React.Component{
       data: null,
       customType: null,
       currentChannel: this.props.enteredChannel,
-      showUpdateForm: false,
-      updatedMessage: '',
-      updatedData: null,
-      updatedCustomType: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMessageDelete = this.handleMessageDelete.bind(this);
-    this.showUpdateForm = this.showUpdateForm.bind(this);
-    this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
   }
 
   //once user enters, set chat state to current channel instance
@@ -66,23 +61,7 @@ class Chat extends React.Component{
     });
   }
 
-  //toggle update form
-  showUpdateForm(){
-    this.state.showUpdateForm ? this.setState({showUpdateForm: false}) : this.setState({showUpdateForm: true});
-  }
 
-  handleMessageUpdate(message){
-
-    let channel = this.state.currentChannel;
-    let {updatedMessage, updatedData, updatedCustomType} = this.state;
-    let updateMessage = this.props.updateMessage;
-
-    channel.updateUserMessage(message.messageId, updatedMessage, updatedData, updatedCustomType, function(userMessage, error) {
-      if (error) return console.error(error);
-      //update app store state for sender socket
-      updateMessage(userMessage);
-    });
-  }
 
   render(){
     let {messageList, user} = this.props;
@@ -96,30 +75,12 @@ class Chat extends React.Component{
               return <div className='message' key={i}>
                 <h3>{message.message}</h3>
                 {user.userId === message.sender.userId ?
-                  <div className='message-edit-buttons'>
+                  <div className='message-buttons'>
                     <button onClick= {() => this.handleMessageDelete(message)}>Delete</button>
-                    <button onClick={this.showUpdateForm}>
-                    Update
-                    </button>
-                    {this.state.showUpdateForm ?
-                      <div>
-                        <form >
-                          <input
-                            name='updatedMessage'
-                            type='text'
-                            placeholder='Type Update Here'
-                            onChange={this.handleChange}
-                            value={this.state.updatedMessage}
-                          />
-                        </form>
-                        <button className="update-message-button"
-                          onClick={() => this.handleMessageUpdate(message)}>
-                        Confirm
-                        </button>
-                      </div>
-                      :
-                      undefined
-                    }
+                    <UpdateMessageForm
+                      message={message}
+                      channel={this.state.currentChannel}
+                    />
                   </div>
                   :
                   undefined
