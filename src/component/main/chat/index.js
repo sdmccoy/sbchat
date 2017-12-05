@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
-
+import * as channelMessageActions from '../../../action/message.js';
 //connect to the sb client.
 const sb = new SendBird({
   appId: __APP_ID__,
@@ -30,8 +30,7 @@ class Chat extends React.Component{
     let {message, data, customType} = this.state;
 
     let channel = this.props.enteredChannel;
-    console.log('props EC =', this.props.enteredChannel);
-
+    let addNewMessage = this.props.addNewMessage;
     channel.sendUserMessage(message, data, customType, function(message, error){
       if (error) {
         console.error(error);
@@ -39,6 +38,8 @@ class Chat extends React.Component{
       }
 
       console.log('success msg = ', message);
+      //add new messages to current message list app store
+      addNewMessage(message);
 
       var ChannelHandler = new sb.ChannelHandler();
 
@@ -65,7 +66,6 @@ class Chat extends React.Component{
   }
 
   render(){
-    console.log('thisprops msg = ', this.props.messageList);
     return(
       <div className='chat-container'>
       hello CHAT
@@ -73,7 +73,6 @@ class Chat extends React.Component{
         hello Message board
           {this.props.messageList.length > 0 ?
             this.props.messageList.map((message, i) => {
-              {console.log('message = ', message);}
               return <div key={i}>{message.message}</div>;
             })
             :
@@ -100,5 +99,7 @@ const mapStateToProps = state => ({
   messageList: state.messages,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  addNewMessage: message => dispatch(channelMessageActions.addNewMessage(message)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

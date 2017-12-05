@@ -5,7 +5,8 @@ export default (state=[], action) => {
   case 'SET_PREVIOUSMESSAGES':
     return payload;
 
-  
+  case 'ADD_NEWMESSAGE':
+    return [payload, ...state];
 
   default: return state;
 
