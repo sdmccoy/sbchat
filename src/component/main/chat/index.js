@@ -14,9 +14,16 @@ class Chat extends React.Component{
       message: '',
       data: null,
       customType: null,
+      currentChannel: this.props.enteredChannel,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleMessageDelete = this.handleMessageDelete.bind(this);
+  }
+
+  //once user enters, set chat state to current channel instance
+  componentWillReceiveProps(props){
+    this.setState({currentChannel: props.enteredChannel});
   }
 
   //set state as input event changes
@@ -29,7 +36,7 @@ class Chat extends React.Component{
 
     let {message, data, customType} = this.state;
 
-    let channel = this.props.enteredChannel;
+    let channel = this.state.currentChannel;
     let addNewMessage = this.props.addNewMessage;
     channel.sendUserMessage(message, data, customType, function(message, error){
       if (error) {
@@ -65,15 +72,35 @@ class Chat extends React.Component{
 
   }
 
+  handleMessageDelete(message){
+
+    let channel = this.state.currentChannel;
+    let deleteMessage = this.props.deleteMessage;
+
+    channel.deleteMessage(message, function(response, error){
+
+      if (error) return console.error(error);
+      deleteMessage(message);
+    });
+  }
+
   render(){
+    let {messageList, user} = this.props;
     return(
       <div className='chat-container'>
-      hello CHAT
+      hello CHAT component
         <div className='message-board'>
-        hello Message board
-          {this.props.messageList.length > 0 ?
-            this.props.messageList.map((message, i) => {
-              return <div key={i}>{message.message}</div>;
+        hello Message board within chat component
+          {messageList.length > 0 ?
+            messageList.map((message, i) => {
+              return <div className='message' key={i}>
+                <h3>{message.message}</h3>
+                {user.userId === message.sender.userId ?
+                  <button onClick= {() => this.handleMessageDelete(message)}>Delete</button>
+                  :
+                  undefined
+                }
+              </div>;
             })
             :
             <h5>No previous messages, start a conversation!</h5>
@@ -97,9 +124,11 @@ class Chat extends React.Component{
 const mapStateToProps = state => ({
   enteredChannel: state.enteredChannel,
   messageList: state.messages,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({
   addNewMessage: message => dispatch(channelMessageActions.addNewMessage(message)),
+  deleteMessage: message => dispatch(channelMessageActions.deleteMessage(message)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

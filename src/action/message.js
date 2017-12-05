@@ -7,3 +7,8 @@ export const addNewMessage = message => ({
   type: 'ADD_NEWMESSAGE',
   payload: message,
 });
+
+export const deleteMessage = message => ({
+  type: 'DELETE_MESSAGE',
+  payload: message,
+});

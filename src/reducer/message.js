@@ -6,7 +6,11 @@ export default (state=[], action) => {
     return payload;
 
   case 'ADD_NEWMESSAGE':
-    return [payload, ...state];
+    return [...state, payload];
+
+  case 'DELETE_MESSAGE':
+    return  state.filter(message => message.messageId !== payload.messageId);
+
 
   default: return state;
 
