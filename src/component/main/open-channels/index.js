@@ -34,27 +34,34 @@ class OpenChannels extends React.Component{
   // }
 
   enterChannel(channel){
+    //set state to current channel, this context
+    this.channel = channel;
+
+    let addNewMessage = this.props.addNewMessage;
 
     sb.OpenChannel.getChannel(channel.url, (channel, error) => {
       if(error) console.error(error);
 
-
       channel.enter((response, error) => {
         if(error) console.error(error);
+
         let ChannelHandler = new sb.ChannelHandler();
 
+        //sending message to recieving socket handler
         ChannelHandler.onMessageReceived = function(channel, message){
-          console.log('handler channel = ', channel);
-          console.log('handler message = ', message);
-          // console.log(channel, message);
+          console.log('handler message enter= ', message);
+          //set app store for receiving user socket to see sent msg
+          addNewMessage(message);
         };
 
         sb.addChannelHandler('received message', ChannelHandler);
+
+        //remove handler after event
+        // sb.removeChannelHandler('received message');
+
+
         console.log('entered channel =', channel);
 
-        //set state to current channel, this context
-        this.channel = channel;
-        console.log('thischannel = ', this.channel);
         //set app store to entered channel
         this.props.setEnteredChannel(channel);
         //fetch the current participantList to append later
@@ -83,20 +90,8 @@ class OpenChannels extends React.Component{
   }
 
   handleChannelDelete(channel){
-
     let {url} = channel;
     this.props.deleteChannelRequest(url);
-
-    //create handler
-    // let ChannelHandler = new sb.ChannelHandler();
-    // //add unique handler ID to sb object
-    // sb.addChannelHandler('deleteChannel', ChannelHandler);
-    // ChannelHandler.onChannelDeleted = (url, channelType) => {
-    //   console.log('url = ', url);
-    //   console.log('channelType = ', channelType);
-    // };
-    // //remove handler after activity
-    // sb.removeChannelHandler('deleteChannel');
   }
 
   render(){
@@ -138,6 +133,7 @@ const mapDispatchToProps = dispatch => ({
   setPreviousMessageList: previousMessages => dispatch(channelMessageActions.setPreviousMessageList(previousMessages)),
   deleteChannelRequest: channel => dispatch(openChannelActions.deleteChannelRequest(channel)),
   setEnteredChannel: channel => dispatch(enteredChannelActions.setEnteredChannel(channel)),
+  addNewMessage: message => dispatch(channelMessageActions.addNewMessage(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpenChannels);

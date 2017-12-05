@@ -38,43 +38,14 @@ class Chat extends React.Component{
     e.preventDefault();
 
     let {message, data, customType} = this.state;
-
     let channel = this.state.currentChannel;
-
-    console.log('channel instance = ', channel);
-    console.log('sb object = ', sb);
-
     let addNewMessage = this.props.addNewMessage;
+
     channel.sendUserMessage(message, data, customType, function(message, error){
-      if (error) {
-        console.error(error);
-        return;
-      }
+      if (error) return console.error(error);
 
-      console.log('success msg = ', message);
-      //add new messages to current message list app store
+      //set app store for sending user socket to see their msgs
       addNewMessage(message);
-
-      let ChannelHandler = new sb.ChannelHandler();
-
-      ChannelHandler.onMessageReceived = function(channel, message){
-        console.log('handler channel = ', channel);
-        console.log('handler message = ', message);
-        // console.log(channel, message);
-      };
-
-      // ChannelHandler.onMessageReceived(channel, message);
-
-      sb.addChannelHandler('received message', ChannelHandler);
-      //set channel handler for async concerns
-      // let channelHandler = new sb.ChannelHandler();
-      // sb.addChannelHandler('received message', channelHandler);
-      // channelHandler.onMessageReceived(channel, message);
-      // console.log('handler = ', channelHandler);
-      // console.log('handler msg rec = ', channelHandler.onMessageReceived);
-
-      //remove handler after event
-      // sb.removeChannelHandler('received message');
     });
 
   }
