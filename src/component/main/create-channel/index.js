@@ -3,10 +3,9 @@ import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import * as openChannelActions from '../../../action/open-channel.js';
 
-//connect to the sb client.
-const sb = new SendBird({
-  appId: __APP_ID__,
-});
+//importing sb object
+import * as client from '../../../lib/sb-object.js';
+let sb = client.sb;
 
 class CreateChannel extends React.Component{
   constructor(props){
@@ -49,6 +48,7 @@ class CreateChannel extends React.Component{
   render(){
     return(
       <div className='create-channel-container'>
+      Hello Create channel
         <button onClick={this.handleShowChannelForm}>
           + Channel
         </button>
@@ -73,7 +73,6 @@ class CreateChannel extends React.Component{
           : undefined
         }
 
-      Hello Create channel
       </div>
     );
   }
