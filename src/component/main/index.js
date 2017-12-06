@@ -1,4 +1,5 @@
 import React from 'react';
+import Appbar from './appbar';
 import CreateChannel from './create-channel';
 import OpenChannels from './open-channels';
 import Profile from './profile';
@@ -13,6 +14,7 @@ class Main extends React.Component{
     return(
       <div className='main-container'>
         hello Main Component
+        <Appbar />
         <CreateChannel />
         <Chat />
         <OpenChannels />
