@@ -1,0 +1,21 @@
+@import '../../../style/_vars.scss';
+
+.appbar{
+  background-color: $color-primary;
+  height: calc(786px*.1);
+  box-shadow: 0px 1px 1px $color-black;
+  i{
+    width: 10%;
+    text-align: left;
+    padding: 16px 0 0 20px;
+    font-size: 50px;
+
+  }
+  h3{
+    width: 70%;
+    text-align: center;
+    padding: 12px 0 0 0;
+    font-size: 50px;
+    color: $color-white;
+  }
+}

@@ -2,6 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import * as openChannelActions from '../../../action/open-channel.js';
+import './_create-channel.scss';
+import RaisedButton from 'material-ui/RaisedButton';
+import Drawer from 'material-ui/Drawer';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -23,7 +26,7 @@ class CreateChannel extends React.Component{
   }
   //toggle showing the create new channel form
   handleShowChannelForm(){
-    this.state.showChannelForm ? this.setState({showChannelForm: false}) : this.setState({showChannelForm: true});
+    this.setState({showChannelForm: !this.state.showChannelForm});
   }
   //set the state as the input event changes
   handleChange(e){
@@ -38,7 +41,7 @@ class CreateChannel extends React.Component{
     let currentChannel = this;
     let {channelName, coverURL, data} = currentChannel.state;
 
-    sb.OpenChannel.createChannel(channelName, coverURL, data, function(createdChannel, error){
+    sb.OpenChannel.createChannel(channelName, coverURL, data, (createdChannel, error) => {
       if(error) console.error(error);
       //set channel state to app store through redux
       currentChannel.props.createOpenChannel(createdChannel);
@@ -46,30 +49,39 @@ class CreateChannel extends React.Component{
   }
 
   render(){
+    let {username, userId} = this.props.user;
     return(
       <div className='create-channel-container'>
       Hello Create channel
-        <button onClick={this.handleShowChannelForm}>
+        <h4>Welcome, {username || userId}!</h4>
+        <RaisedButton onClick={this.handleShowChannelForm}>
           + Channel
-        </button>
-        {!this.state.showChannelForm ?
-          <form onSubmit={this.handleSubmit}>
-            <input
-              name='channelName'
-              type='text'
-              placeholder='Channel Name'
-              onChange={this.handleChange}
-              value={this.state.userID}
-            />
-            <input
-              name='data'
-              type='text'
-              placeholder='Description'
-              onChange={this.handleChange}
-              value={this.state.userID}
-            />
-            <button className="create-channel-button" type="submit">Create</button>
-          </form>
+        </RaisedButton>
+        {this.state.showChannelForm ?
+          <Drawer>
+            <form onSubmit={this.handleSubmit}>
+              <input
+                name='channelName'
+                type='text'
+                placeholder='Channel Name'
+                onChange={this.handleChange}
+                value={this.state.userID}
+              />
+              <input
+                name='data'
+                type='text'
+                placeholder='Description'
+                onChange={this.handleChange}
+                value={this.state.userID}
+              />
+              <RaisedButton className="create-channel-button" type="submit">
+                Create
+              </RaisedButton>
+              <RaisedButton className="cancel-channel-button" onClick={this.handleShowChannelForm}>
+                Cancel
+              </RaisedButton>
+            </form>
+          </Drawer>
           : undefined
         }
 
@@ -81,6 +93,7 @@ class CreateChannel extends React.Component{
 
 const mapStateToProps = state => ({
   openChannel: state.openChannel,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({

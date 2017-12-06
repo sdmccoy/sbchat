@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import UpdateMessageForm from '../update-message-form';
 import * as channelMessageActions from '../../../action/message.js';
+//style
+import './_chat.scss';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -46,7 +50,8 @@ class Chat extends React.Component{
       //set app store for sending user socket to see their msgs
       addNewMessage(message);
     });
-
+    //clear input after send
+    this.setState({message: ''});
   }
 
   handleMessageDelete(message){
@@ -61,8 +66,6 @@ class Chat extends React.Component{
     });
   }
 
-
-
   render(){
     let {messageList, user} = this.props;
     return(
@@ -73,17 +76,34 @@ class Chat extends React.Component{
           {messageList.length > 0 ?
             messageList.map((message, i) => {
               return <div className='message' key={i}>
-                <h3>{message.message}</h3>
                 {user.userId === message.sender.userId ?
-                  <div className='message-buttons'>
-                    <button onClick= {() => this.handleMessageDelete(message)}>Delete</button>
+                  <Card className='current-user-message'>
+                    <CardHeader
+                      title={message.sender.userId}
+                      avatar={message.sender.profileUrl}
+                    />
+                    <CardText>{message.message}</CardText>
+                    <CardActions className='cardaction-delete'>
+                      <i className="material-icons"
+                        onClick= {() => this.handleMessageDelete(message)}
+                      >
+                      delete_forever
+                      </i>
+                    </CardActions>
                     <UpdateMessageForm
                       message={message}
                       channel={this.state.currentChannel}
+                      showUpdateForm={this.state.showUpdateForm}
                     />
-                  </div>
+                  </Card>
                   :
-                  undefined
+                  <Card className='other-user-message'>
+                    <CardHeader
+                      title={message.sender.userId}
+                      avatar={message.sender.profileUrl}
+                    />
+                    <CardText>{message.message}</CardText>
+                  </Card>
                 }
               </div>;
             })
@@ -91,16 +111,23 @@ class Chat extends React.Component{
             <h5>No previous messages, start a conversation!</h5>
           }
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            name='message'
-            type='text'
-            placeholder='Type Message Here'
-            onChange={this.handleChange}
-            value={this.state.message}
-          />
-          <button className="send-message-button" type="submit">Send</button>
-        </form>
+        <div className='chat-submit'>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              name='message'
+              type='text'
+              placeholder='Type Message Here ...'
+              onChange={this.handleChange}
+              value={this.state.message}
+            />
+            <FloatingActionButton className="send-message-button" type="submit"
+              mini={true}
+              zDepth={0}
+            >
+              <i className="material-icons">send</i>
+            </FloatingActionButton>
+          </form>
+        </div>
       </div>
     );
   }

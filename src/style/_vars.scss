@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+//main colors
+$color-primary: #64C9BD;
+$color-secondary: #27847A;
+$color-tertriary: #C28662;
+
+$color-button: #64C9BD;
+$color-hover: #468CE8;
+$color-active: #C28662;
+$color-font: #FFF;
+$color-border: #77797B;
+
+//fonts
+$font-main: 'Roboto', sans-serif;
+$fontface-sans-serif: sans-serif;
+
+//error classes
+$error-close-box: #e0acac;
+$error-close-box-mouseover: #7c7e7f;
+$error-box-background: #f2dede;
+$error-box-border: #e8b3b0;
+$error-box-text: #a94442;
+
+//default colors
+$color-white: #fff;
+$color-black: #000;
+$color-lightgrey: #e3e5e8;
+$color-grey: #00A9BE;
+$color-darkgrey: #77797B;
+
+$pad: 0.5em;

@@ -6,6 +6,11 @@ import * as userActions from '../../../action/user.js';
 import * as enteredChannelActions from '../../../action/entered-channel.js';
 import * as channelParticipantActions from '../../../action/participant-list.js';
 import * as channelMessageActions from '../../../action/message.js';
+//styles
+import './_open-channels.scss';
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
+import RaisedButton from 'material-ui/RaisedButton';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -17,11 +22,15 @@ class OpenChannels extends React.Component{
   constructor(props){
     super(props);
     this.channel = null;
+    this.state = {
+      showChannelDelete: false,
+    };
 
     this.enterChannel = this.enterChannel.bind(this);
     this.handleChannelDelete = this.handleChannelDelete.bind(this);
     this.fetchParticipantList = this.fetchParticipantList.bind(this);
     this.fetchPreviousMessageList = this.fetchPreviousMessageList.bind(this);
+    this.showChannelDelete = this.showChannelDelete.bind(this);
   }
 
   //user signs in first then make query for channels
@@ -41,16 +50,15 @@ class OpenChannels extends React.Component{
     let updateMessage = this.props.updateMessage;
 
     sb.OpenChannel.getChannel(channel.url, (channel, error) => {
-      if(error) console.error(error);
+      if(error) return console.error(error);
 
       channel.enter((response, error) => {
-        if(error) console.error(error);
+        if(error) return console.error(error);
 
         let ChannelHandler = new sb.ChannelHandler();
 
         //sending message to recieving socket handler
         ChannelHandler.onMessageReceived = function(channel, message){
-          console.log('handler message enter= ', message);
           //set app store for receiving user socket to see sent msg
           addNewMessage(message);
         };
@@ -98,34 +106,54 @@ class OpenChannels extends React.Component{
     });
   }
 
+  showChannelDelete(){
+    this.setState({showChannelDelete: !this.state.showChannelDelete});
+  }
+
   handleChannelDelete(channel){
     let {url} = channel;
     this.props.deleteChannelRequest(url);
   }
 
   render(){
+
     return(
-      <div className='channels-container'>
-        <div className='open-channels-container'>
-        hello Open Channels
-          {this.props.openChannels.length > 0 ?
-            this.props.openChannels.map((channel, i) => {
-              return <div className='open-channel' key={i}>
-                <h3>{channel.name}</h3>
-                <h5>{channel.data}</h5>
-                <button onClick={() => this.enterChannel(channel)}>
-                Enter
-                </button>
-                <button onClick={() => this.handleChannelDelete(channel)}>
-                Delete
-                </button>
-              </div>;
-            })
-            :
-            <h5>No Channels Yet</h5>
-          }
+      <List className='open-channels-container'>
+        <div className='clear-float'></div>
+        <div className='title'>
+          <h5>Open Chat Channels</h5>
+          <i className="material-icons"
+            onClick={this.showChannelDelete}>
+            delete
+          </i>
         </div>
-      </div>
+
+        {this.props.openChannels.length > 0 ?
+          this.props.openChannels.map((channel, i) => {
+            return <div className='open-channel' key={i}>
+              <ListItem
+                primaryText={channel.name}
+                leftAvatar={<Avatar src={channel.coverUrl} />}
+                rightIcon={<i className="material-icons">
+                  chat
+                </i>}
+                secondaryText={channel.data}
+                onClick={() => this.enterChannel(channel)}
+              >
+              </ListItem>
+              {this.state.showChannelDelete ?
+                <RaisedButton onClick={() => this.handleChannelDelete(channel)}>
+                  <h6>Delete {channel.name}</h6>
+                </RaisedButton>
+                :
+                undefined
+              }
+            </div>;
+          })
+          :
+          <h6>No channels yet, create one above.</h6>
+        }
+      </List>
     );
   }
 

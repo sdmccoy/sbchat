@@ -1,0 +1,10 @@
+@import '../../../style/_vars.scss';
+
+.create-channel-container{
+  outline: 1px solid black;
+  width: 25%;
+  height: 30%;
+  * {
+    margin: 0 0 $pad 0;
+  }
+}
