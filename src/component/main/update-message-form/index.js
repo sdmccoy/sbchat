@@ -2,6 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as channelMessageActions from '../../../action/message.js';
 
+//style
+import './_update-message-form.scss';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import {CardActions} from 'material-ui/Card';
+
 class UpdateMessageForm extends React.Component{
   constructor(props){
     super(props);
@@ -9,7 +14,7 @@ class UpdateMessageForm extends React.Component{
       updatedMessage: '',
       updatedData: null,
       updatedCustomType: null,
-      showUpdateForm: false,
+      showUpdateForm: this.props.showUpdateForm,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
@@ -41,26 +46,39 @@ class UpdateMessageForm extends React.Component{
 
 
   render(){
+    const style = {
+      fab: {
+        width: '2px',
+      },
+    };
+    console.log('thispropsSUF = ', this.props.showUpdateForm);
     return(
-      <div>
-        <button onClick={this.showUpdateForm}>
-        Update
-        </button>
+      <div className='update-message-form-container'>
+
+        <i className="material-icons"
+          onClick={this.showUpdateForm}
+        >
+        mode_edit
+        </i>
         {this.state.showUpdateForm ?
-          <div>
+          <div className='update-form'>
             <form >
               <input
                 name='updatedMessage'
                 type='text'
-                placeholder='Type Update Here'
+                placeholder='Type Update Here ...'
                 onChange={this.handleChange}
                 value={this.state.updatedMessage}
               />
             </form>
-            <button className="update-message-button"
-              onClick={() => this.handleMessageUpdate(this.props.message)}>
-              Confirm
-            </button>
+            <FloatingActionButton   className="send-message-button" type="submit"
+              mini={true}
+              zDepth={0}
+              style={style.fab}
+              onClick={() => this.handleMessageUpdate(this.props.message)}
+            >
+              <i className="material-icons">send</i>
+            </FloatingActionButton>
           </div>
           :
           undefined

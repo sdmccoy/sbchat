@@ -6,6 +6,7 @@ import * as channelMessageActions from '../../../action/message.js';
 //style
 import './_chat.scss';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -65,8 +66,6 @@ class Chat extends React.Component{
     });
   }
 
-
-
   render(){
     let {messageList, user} = this.props;
     return(
@@ -78,16 +77,33 @@ class Chat extends React.Component{
             messageList.map((message, i) => {
               return <div className='message' key={i}>
                 {user.userId === message.sender.userId ?
-                  <div className='message-buttons'>
-                    <h5>You said: {message.message}</h5>
-                    <button onClick= {() => this.handleMessageDelete(message)}>Delete</button>
+                  <Card className='current-user-message'>
+                    <CardHeader
+                      title={message.sender.userId}
+                      avatar={message.sender.profileUrl}
+                    />
+                    <CardText>{message.message}</CardText>
+                    <CardActions className='cardaction-delete'>
+                      <i className="material-icons"
+                        onClick= {() => this.handleMessageDelete(message)}
+                      >
+                      delete_forever
+                      </i>
+                    </CardActions>
                     <UpdateMessageForm
                       message={message}
                       channel={this.state.currentChannel}
+                      showUpdateForm={this.state.showUpdateForm}
                     />
-                  </div>
+                  </Card>
                   :
-                  <h5>{message.sender.userId} said: {message.message}</h5>
+                  <Card className='other-user-message'>
+                    <CardHeader
+                      title={message.sender.userId}
+                      avatar={message.sender.profileUrl}
+                    />
+                    <CardText>{message.message}</CardText>
+                  </Card>
                 }
               </div>;
             })
