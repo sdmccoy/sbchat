@@ -4,6 +4,7 @@ import OpenChannels from './open-channels';
 import Profile from './profile';
 import Chat from './chat';
 import ParticipantList from './participant-list';
+import './_main-comp.scss';
 
 class Main extends React.Component{
   render(){
@@ -11,7 +12,7 @@ class Main extends React.Component{
     // <Profile />
     return(
       <div className='main-container'>
-        hello Main testing
+        hello Main Component
         <CreateChannel />
         <OpenChannels />
         <Chat />
