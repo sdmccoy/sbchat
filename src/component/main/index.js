@@ -14,8 +14,8 @@ class Main extends React.Component{
       <div className='main-container'>
         hello Main Component
         <CreateChannel />
-        <OpenChannels />
         <Chat />
+        <OpenChannels />
         <ParticipantList />
       </div>
     );
