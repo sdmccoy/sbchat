@@ -6,4 +6,23 @@
   width: 25%;
   height: 70%;
 
+  .title{
+    background-color: $color-primary;
+    h5{
+      width: 90%;
+      color: $color-white;
+    }
+    i{
+      width: 10%;
+      cursor: pointer;
+      text-align: right;
+    }
+  }
+  h6{
+    font-style: italic;
+  }
+}
+
+div.open-channel.div{
+  cursor: default;
 }
