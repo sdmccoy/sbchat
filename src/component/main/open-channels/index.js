@@ -6,6 +6,10 @@ import * as userActions from '../../../action/user.js';
 import * as enteredChannelActions from '../../../action/entered-channel.js';
 import * as channelParticipantActions from '../../../action/participant-list.js';
 import * as channelMessageActions from '../../../action/message.js';
+//styles
+import './_open-channels.scss';
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -105,27 +109,29 @@ class OpenChannels extends React.Component{
 
   render(){
     return(
-      <div className='channels-container'>
-        <div className='open-channels-container'>
-        hello Open Channels
-          {this.props.openChannels.length > 0 ?
-            this.props.openChannels.map((channel, i) => {
-              return <div className='open-channel' key={i}>
-                <h3>{channel.name}</h3>
-                <h5>{channel.data}</h5>
-                <button onClick={() => this.enterChannel(channel)}>
-                Enter
-                </button>
-                <button onClick={() => this.handleChannelDelete(channel)}>
-                Delete
-                </button>
-              </div>;
-            })
-            :
-            <h5>No Channels Yet</h5>
-          }
-        </div>
-      </div>
+      <List className='open-channels-container'>
+        <div className='clear-float'></div>
+      hello Open Channels
+        {this.props.openChannels.length > 0 ?
+          this.props.openChannels.map((channel, i) => {
+            return <ListItem className='open-channel' key={i}
+              primaryText={channel.name}
+              leftAvatar={<Avatar src={channel.coverUrl} />}
+            > 
+              <i className="material-icons"
+                onClick={() => this.handleChannelDelete(channel)}>
+                delete
+              </i>
+              <i className="material-icons"
+                onClick={() => this.enterChannel(channel)}>
+                chat
+              </i>
+            </ListItem>;
+          })
+          :
+          <h5>No Channels Yet</h5>
+        }
+      </List>
     );
   }
 

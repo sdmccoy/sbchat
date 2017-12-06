@@ -40,7 +40,7 @@ class Signin extends React.Component{
       if(error) console.error(error);
       //set user state to app store through redux
       currentUser.props.userSignin(user);
-      currentUser.setState({redirect: true});
+      currentUser.setState({redirect: true, userID: ''});
     });
 
 
