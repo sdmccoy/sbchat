@@ -3,7 +3,9 @@ import SendBird from 'sendbird';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import * as userActions from '../../action/user.js';
-import sblogo from '../../assets/sblogo.png';
+//tracking
+import track from 'react-tracking';
+//assets
 import bluorbitlogo from '../../assets/bluorbitlogo.png';
 //style
 import './_signin.scss';
@@ -15,6 +17,8 @@ import * as openChannelActions from '../../action/open-channel.js';
 import * as client from '../../lib/sb-object.js';
 let sb = client.sb;
 
+//decorator tracking
+@track({page: 'signin-page'})
 class Signin extends React.Component{
   constructor(props){
     super(props);
@@ -34,9 +38,10 @@ class Signin extends React.Component{
   }
 
   //connect user from form
-  //delete userID param after dev session
+  @track({action: 'click-signin'})
   handleSubmit(e){
     e.preventDefault();
+    console.log('this.props = ', this.props.tracking.getTrackingData());
     //set to current instance to pass in props & state
     let currentUser = this;
 
