@@ -2,6 +2,7 @@
 
 .chat-container{
   outline: 1px solid black;
+  position: relative;
 
   .title{
     background-color: $color-primary;
@@ -12,6 +13,10 @@
       padding-left: 1%;
     }
   }
+}
+
+.message-board{
+  overflow: scroll;
 }
 
 .current-user-message, .other-user-message{
@@ -46,6 +51,9 @@
 }
 
 .chat-submit{
+  position: absolute;
+  bottom: 0;
+
   input{
     width: 90%;
     margin: 0 1%;
