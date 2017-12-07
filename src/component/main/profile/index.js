@@ -18,6 +18,7 @@ class Profile extends React.Component{
     this.handleShowProfileForm = this.handleShowProfileForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
   }
 
   //toggle showing the update profile form
@@ -43,6 +44,13 @@ class Profile extends React.Component{
       if(error) console.error(error);
       //if no error, set user state to app store
       currentUser.props.editUserProfile(response);
+    });
+  }
+
+  //logout current user
+  handleSignout(){
+    sb.disconnect(function(){
+      // You are disconnected from SendBird.
     });
   }
 
@@ -76,6 +84,7 @@ class Profile extends React.Component{
           </form>
           : undefined
         }
+        <button onClick={this.handleLogout}>Sign Out</button>
       </div>
     );
   }
