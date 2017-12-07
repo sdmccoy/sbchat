@@ -38,17 +38,16 @@ class Signin extends React.Component{
   }
 
   //connect user from form
+  //track sign in button event
   @track({action: 'click-signin'})
   handleSubmit(e){
     e.preventDefault();
-    console.log('this props = ', this.props);
-    console.log('this.props data = ', this.props.tracking.getTrackingData());
     //set to current instance to pass in props & state
     let currentUser = this;
 
     //change userID back to currentUser.state.userID after dev
-    sb.connect(currentUser.state.userID, __API_TOKEN__, function(user, error){
-      if(error) console.error(error);
+    sb.connect(currentUser.state.userID, __API_TOKEN__, (user, error) => {
+      if(error) return console.error(error);
       //set user state to app store through redux
       currentUser.props.userSignin(user);
       currentUser.setState({redirect: true, userID: ''});
