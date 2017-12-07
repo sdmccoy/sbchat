@@ -13,7 +13,6 @@ import * as trackerActions from '../../action/tracker.js';
 //invoking the redux store, wrapping the whole app for state mgnt
 const store = appStoreCreate();
 @track({}, { dispatch: (data) => {
-  console.log('data = ', data);
   return store.dispatch(trackerActions.addTrackEvent(data));
 }
 })

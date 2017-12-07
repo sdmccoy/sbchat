@@ -1,6 +1,6 @@
 export default (state=[], action) => {
   let {type, payload} = action;
-  console.log('payload in tracker = ', payload);
+
   switch (type) {
   case 'ADD_EVENT':
   //returning oldest to most recent event
