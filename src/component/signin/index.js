@@ -41,7 +41,8 @@ class Signin extends React.Component{
   @track({action: 'click-signin'})
   handleSubmit(e){
     e.preventDefault();
-    console.log('this.props = ', this.props.tracking.getTrackingData());
+    console.log('this props = ', this.props);
+    console.log('this.props data = ', this.props.tracking.getTrackingData());
     //set to current instance to pass in props & state
     let currentUser = this;
 
