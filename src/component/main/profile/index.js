@@ -59,7 +59,7 @@ class Profile extends React.Component{
   }
 
   //logout current user
-  $track({action: 'user-signout'})
+  @track({action: 'user-signout'})
   handleSignout(){
     sb.disconnect(() => {
       // You are disconnected from SendBird.

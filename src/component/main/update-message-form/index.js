@@ -13,10 +13,10 @@ class UpdateMessageForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      updatedMessage: this.props.message.message || '',
+      updatedMessage: '',
       updatedData: null,
       updatedCustomType: null,
-      showUpdateForm: this.props.showUpdateForm,
+      showUpdateForm: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleMessageUpdate = this.handleMessageUpdate.bind(this);
@@ -24,9 +24,9 @@ class UpdateMessageForm extends React.Component{
   }
 
   //toggle update form
-  @track((props, state) => {
-    return {action: state.showUpdateForm ? 'update-message-form-minimize' : 'update-message-form-expand'}
-  })
+  // @track((props, state) => {
+  //   return {action: state.showUpdateForm ? 'update-message-form-minimize' : 'update-message-form-expand'}
+  // })
   showUpdateForm(){
     this.setState({showUpdateForm: !this.state.showUpdateForm});
   }
@@ -51,6 +51,7 @@ class UpdateMessageForm extends React.Component{
       //update app store state for sender socket
       updateMessage(userMessage);
     });
+    this.setState({showUpdateForm: false});
   }
 
 
