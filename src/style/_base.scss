@@ -29,14 +29,14 @@ label {
 //
 textarea, input {
   padding: $pad;
-  border: 1px solid $color-lightgrey;
+  border: 1px solid $color-grey;
   resize: none;
 
   &:focus {
     border: 1px solid $color-darkgrey;
   }
   &::placeholder {
-    color: $color-lightgrey;
+    color: $color-grey;
   }
 }
 

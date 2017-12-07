@@ -6,6 +6,9 @@ import * as userActions from '../../../action/user.js';
 import * as enteredChannelActions from '../../../action/entered-channel.js';
 import * as channelParticipantActions from '../../../action/participant-list.js';
 import * as channelMessageActions from '../../../action/message.js';
+//tracking
+import track from 'react-tracking';
+
 //styles
 import './_open-channels.scss';
 import {List, ListItem} from 'material-ui/List';
@@ -18,14 +21,17 @@ let sb = client.sb;
 
 const openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 
+//decorator tracking
+@track({page: 'openchannels-component'}, {dispatchOnMount: (contextData) => ({event: 'openchannels-component-mounted'}) })
 class OpenChannels extends React.Component{
   constructor(props){
     super(props);
-    this.channel = null;
     this.state = {
+      channel: '',
       showChannelDelete: false,
     };
 
+    this._enterChannel = this._enterChannel.bind(this);
     this.enterChannel = this.enterChannel.bind(this);
     this.handleChannelDelete = this.handleChannelDelete.bind(this);
     this.fetchParticipantList = this.fetchParticipantList.bind(this);
@@ -41,10 +47,19 @@ class OpenChannels extends React.Component{
   //     this.props.fetchOpenChannels(channels);
   //   });
   // }
+  //set state for tracking prior to entrance
+  _enterChannel(enteredChannel){
 
+    this.state.channel = enteredChannel;
+    this.enterChannel(this.state.channel);
+  }
+
+  //user enters channel
+  //track when user attempts to enter channel
+  @track((undefined, state) => {
+  return {action: `enter-attempt-to-channel: ${state.channel.name}`}
+  })
   enterChannel(channel){
-    //set state to current channel, this context
-    this.channel = channel;
 
     let addNewMessage = this.props.addNewMessage;
     let updateMessage = this.props.updateMessage;
@@ -66,23 +81,20 @@ class OpenChannels extends React.Component{
         sb.addChannelHandler('received message', ChannelHandler);
 
         ChannelHandler.onMessageUpdated = function(channel, message){
-          console.log('handler message enter update= ', message);
           //set app store for receiving user socket to see sent msg
           updateMessage(message);
         };
 
         sb.addChannelHandler('received message', ChannelHandler);
 
-        //remove handler after event
+        //remove handler kills the action, todo: fix
         // sb.removeChannelHandler('received message');
-
-
-        console.log('entered channel =', channel);
 
         //set app store to entered channel
         this.props.setEnteredChannel(channel);
         //fetch the current participantList to append later
         this.fetchParticipantList(channel);
+        //fetch 30 previous messages from channel
         this.fetchPreviousMessageList(channel);
       });
     });
@@ -101,15 +113,22 @@ class OpenChannels extends React.Component{
 
     messageListQuery.load(30, true, (messageList, error) => {
       if (error) return console.error(error);
-      console.log('success msg list = ', messageList);
       this.props.setPreviousMessageList(messageList);
     });
   }
 
+  //toggle the channel delete buttons
+  //track user clicking the delete icon
+  @track((undefined, state) => {
+    return {action: state.showChannelDelete ? 'click-deletechannel-minimize' : 'click-deletechannel-expand'}
+  })
   showChannelDelete(){
     this.setState({showChannelDelete: !this.state.showChannelDelete});
   }
 
+  //delete channel on submit
+  //track user action when deleting channel
+  @track({action: 'click-channel-delete'})
   handleChannelDelete(channel){
     let {url} = channel;
     this.props.deleteChannelRequest(url);
@@ -137,7 +156,7 @@ class OpenChannels extends React.Component{
                   chat
                 </i>}
                 secondaryText={channel.data}
-                onClick={() => this.enterChannel(channel)}
+                onClick={() => this._enterChannel(channel)}
               >
               </ListItem>
               {this.state.showChannelDelete ?

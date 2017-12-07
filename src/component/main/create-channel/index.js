@@ -2,14 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import * as openChannelActions from '../../../action/open-channel.js';
+//style
 import './_create-channel.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 import Drawer from 'material-ui/Drawer';
+//tracking
+import track from 'react-tracking';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
 let sb = client.sb;
 
+//decorator tracking
+@track({page: 'createchannel-component'}, {dispatchOnMount: (contextData) => ({event: 'createchannel-component-mounted'}) })
 class CreateChannel extends React.Component{
   constructor(props){
     super(props);
@@ -25,6 +30,11 @@ class CreateChannel extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   //toggle showing the create new channel form
+  //track show form click
+  //TODO: fix cancel gets logged after user submits new channel
+  @track((undefined, state) => {
+  return {action: state.showChannelForm ? 'click-createcchannel-cancel' : 'click-createchannel-form'}
+  })
   handleShowChannelForm(){
     this.setState({showChannelForm: !this.state.showChannelForm});
   }
@@ -34,6 +44,10 @@ class CreateChannel extends React.Component{
   }
 
   //create channel from form
+  //track submit new channel
+  @track((undefined, state) => {
+  return {action: `click-submit-newchannel: ${state.channelName}`}
+  })
   handleSubmit(e){
     e.preventDefault();
     this.handleShowChannelForm();
@@ -42,7 +56,7 @@ class CreateChannel extends React.Component{
     let {channelName, coverURL, data} = currentChannel.state;
 
     sb.OpenChannel.createChannel(channelName, coverURL, data, (createdChannel, error) => {
-      if(error) console.error(error);
+      if(error) return console.error(error);
       //set channel state to app store through redux
       currentChannel.props.createOpenChannel(createdChannel);
     });

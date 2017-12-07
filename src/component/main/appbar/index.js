@@ -9,7 +9,7 @@ class Appbar extends React.Component{
     return(
       <div className='appbar'>
         <i className="material-icons">send</i>
-        <h3>Welcome to SendBird Chat, {this.props.user.nickname || this.props.user.userId}!</h3>
+        <h3>Welcome to bluOrbit Chat, {this.props.user.nickname || this.props.user.userId}!</h3>
       </div>
     );
   }

@@ -3,7 +3,8 @@ export default (state=[], action) => {
 
   switch (type) {
   case 'SET_PREVIOUSMESSAGES':
-    return payload;
+    var rpayload = payload.reverse();
+    return rpayload;
 
   case 'ADD_NEWMESSAGE':
     return [...state, payload];
