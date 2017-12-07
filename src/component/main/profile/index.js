@@ -2,11 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import * as userActions from '../../../action/user.js';
+//tracking
+import track from 'react-tracking';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
 let sb = client.sb;
 
+@track({page: 'profile-component'}, {dispatchOnMount: (contextData) => ({event: 'profile-component-mounted'}) })
 class Profile extends React.Component{
   constructor(props){
     super(props);

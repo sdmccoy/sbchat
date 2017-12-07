@@ -1,17 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as channelMessageActions from '../../../action/message.js';
-
+//tracking
+import track from 'react-tracking';
 //style
 import './_update-message-form.scss';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {CardActions} from 'material-ui/Card';
 
+@track({page: 'updatemessage-component'}, {dispatchOnMount: (contextData) => ({event: 'updatemessage-component-mounted'}) })
 class UpdateMessageForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      updatedMessage: '',
+      updatedMessage: this.props.message.message || '',
       updatedData: null,
       updatedCustomType: null,
       showUpdateForm: this.props.showUpdateForm,
@@ -22,6 +24,9 @@ class UpdateMessageForm extends React.Component{
   }
 
   //toggle update form
+  @track((props, state) => {
+    return {action: state.showUpdateForm ? 'update-message-form-minimize' : 'update-message-form-expand'}
+  })
   showUpdateForm(){
     this.setState({showUpdateForm: !this.state.showUpdateForm});
   }
@@ -30,7 +35,11 @@ class UpdateMessageForm extends React.Component{
     this.setState({[e.target.name]: e.target.value});
   }
 
-
+  //update the current message with the data
+  //track the update event with the msg id
+  @track((props, state) => {
+    return {action: `update-message, id: ${props.message.messageId}`}
+  })
   handleMessageUpdate(message){
 
     let channel = this.props.channel;

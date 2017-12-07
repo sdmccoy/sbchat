@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import SendBird from 'sendbird';
 import UpdateMessageForm from '../update-message-form';
 import * as channelMessageActions from '../../../action/message.js';
+//tracking
+import track from 'react-tracking';
 //style
 import './_chat.scss';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -12,7 +14,8 @@ import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card';
 import * as client from '../../../lib/sb-object.js';
 let sb = client.sb;
 
-
+//decorator tracking
+@track({page: 'chat-component'}, {dispatchOnMount: (contextData) => ({event: 'chat-component-mounted'}) })
 class Chat extends React.Component{
   constructor(props){
     super(props);
@@ -37,6 +40,10 @@ class Chat extends React.Component{
     this.setState({[e.target.name]: e.target.value});
   }
 
+  //submit a new message from a user
+  //track the new message action
+  //message is tracked in state, ommitting saving it to tracker
+  @track({action: 'message-sent'})
   handleSubmit(e){
     e.preventDefault();
 
@@ -54,6 +61,9 @@ class Chat extends React.Component{
     this.setState({message: ''});
   }
 
+  //remove the message from the app store
+  //track when user deletes message
+  @track({action: 'message-delete'})
   handleMessageDelete(message){
 
     let channel = this.state.currentChannel;
