@@ -49,13 +49,16 @@ class CreateChannel extends React.Component{
   }
 
   render(){
-    let {username, userId} = this.props.user;
     return(
       <div className='create-channel-container'>
-      Hello Create channel
-        <h4>Welcome, {username || userId}!</h4>
-        <RaisedButton onClick={this.handleShowChannelForm}>
-          + Channel
+        <div className='title'>
+          <h5>CREATE A CHANNEL</h5>
+        </div>
+        <RaisedButton
+          className='add-channel-button'
+          onClick={this.handleShowChannelForm}
+        >
+        + Channel
         </RaisedButton>
         {this.state.showChannelForm ?
           <Drawer>

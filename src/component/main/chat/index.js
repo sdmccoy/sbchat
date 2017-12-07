@@ -67,12 +67,17 @@ class Chat extends React.Component{
   }
 
   render(){
-    let {messageList, user} = this.props;
+    let {messageList, user, enteredChannel} = this.props;
     return(
       <div className='chat-container'>
-      hello CHAT component
+        <div className='title'>
+          {enteredChannel.name ?
+            <h5>YOU ARE IN CHANNEL: {enteredChannel.name}</h5>
+            :
+            <h5>CLICK ON A CHANNEL TO ENTER A CHAT</h5>
+          }
+        </div>
         <div className='message-board'>
-        hello Message board within chat component
           {messageList.length > 0 ?
             messageList.map((message, i) => {
               return <div className='message' key={i}>

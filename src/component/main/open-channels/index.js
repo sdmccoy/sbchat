@@ -119,9 +119,8 @@ class OpenChannels extends React.Component{
 
     return(
       <List className='open-channels-container'>
-        <div className='clear-float'></div>
         <div className='title'>
-          <h5>Open Chat Channels</h5>
+          <h5>OPEN CHANNELS</h5>
           <i className="material-icons"
             onClick={this.showChannelDelete}>
             delete

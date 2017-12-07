@@ -10,15 +10,15 @@ class ParticipantList extends React.Component{
   render(){
     const style = {
       chip: {
-        width: '50%',
-        margin: '1%',
+        width: '70%',
+        margin: '2% 15%',
         textAlign: 'center',
       },
     };
     return(
       <div className='participant-list-container'>
         <div className='title'>
-          <h5>Chat Buddies</h5>
+          <h5>CHAT BUDDIES</h5>
           <i className="material-icons">
             people
           </i>
