@@ -15,10 +15,14 @@ class Main extends React.Component{
       <div className='main-container'>
         hello Main Component
         <Appbar />
-        <CreateChannel />
+        <aside className='aside-left'>
+          <CreateChannel />
+          <OpenChannels />
+        </aside>
         <Chat />
-        <OpenChannels />
-        <ParticipantList />
+        <aside className='aside-right'>
+          <ParticipantList />
+        </aside>
       </div>
     );
   }

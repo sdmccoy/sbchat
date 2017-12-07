@@ -2,9 +2,20 @@
 
 .create-channel-container{
   outline: 1px solid black;
-  width: 25%;
-  height: 30%;
-  * {
-    margin: 0 0 $pad 0;
+  height: 10%;
+
+  .title{
+    background-color: $color-primary;
+
+    h5{
+      width: 90%;
+      color: $color-white;
+      margin: 2px 0 0 0;
+    }
+  }
+
+  .add-channel-button{
+    margin: 1% !important;
+    width: 98% !important;
   }
 }
