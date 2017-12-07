@@ -25,6 +25,10 @@ class Profile extends React.Component{
   }
 
   //toggle showing the update profile form
+  //track show form click event
+  @track((undefined, state) => {
+    return {action: state.showProfileForm ? 'click-profileform-minimize' : 'click-profileform-expand'}
+  })
   handleShowProfileForm(){
     this.state.showProfileForm ? this.setState({showProfileForm: false}) : this.setState({showProfileForm: true});
   }
@@ -35,6 +39,10 @@ class Profile extends React.Component{
   }
 
   //update profile from form
+  //track update action with userId
+  @track((props, state) => {
+    return {action: `click-update-profile, id: ${props.user.userId}`}
+  })
   handleSubmit(e){
     e.preventDefault();
     this.handleShowProfileForm();
@@ -51,6 +59,7 @@ class Profile extends React.Component{
   }
 
   //logout current user
+  $track({action: 'user-signout'})
   handleSignout(){
     sb.disconnect(() => {
       // You are disconnected from SendBird.

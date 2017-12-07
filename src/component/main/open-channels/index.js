@@ -119,7 +119,6 @@ class OpenChannels extends React.Component{
 
   //toggle the channel delete buttons
   //track user clicking the delete icon
-  //TODO: fix, minize gets logged when user deletes channel
   @track((undefined, state) => {
     return {action: state.showChannelDelete ? 'click-deletechannel-minimize' : 'click-deletechannel-expand'}
   })
