@@ -3,6 +3,11 @@ import SendBird from 'sendbird';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import * as userActions from '../../action/user.js';
+import sblogo from '../../assets/sblogo.png';
+import bluorbitlogo from '../../assets/bluorbitlogo.png';
+//style
+import './_signin.scss';
+
 //remove after dev session
 import * as openChannelActions from '../../action/open-channel.js';
 
@@ -62,7 +67,8 @@ class Signin extends React.Component{
     // if(redirect) {return <Redirect to='/main'/>;}
     return(
       <div className='signin-container'>
-        <h2>Signin to Chat</h2>
+        <img src={bluorbitlogo} />
+        <h4>Create an account or signin.</h4>
         <form onSubmit={this.handleSubmit}>
           <input
             name='userID'

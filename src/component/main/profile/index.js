@@ -49,8 +49,9 @@ class Profile extends React.Component{
 
   //logout current user
   handleSignout(){
-    sb.disconnect(function(){
+    sb.disconnect(() => {
       // You are disconnected from SendBird.
+      console.log('user signed out');
     });
   }
 
