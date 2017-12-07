@@ -17,10 +17,11 @@
 
 .message-board{
   overflow: scroll;
+  height: 90%;
 }
 
 .current-user-message, .other-user-message{
-  box-shadow: 1px 1px 3px $color-secondary;
+  box-shadow: 1px 1px 5px $color-secondary;
   width: 98%;
   margin: 1%;
 
@@ -33,12 +34,12 @@
 
   h4{
     height: 25px;
-    width: 85%;
+    width: 80%;
     margin: 2%;
   }
 
   p{
-    width: 85%;
+    width: 80%;
     margin: 2%;
   }
 
