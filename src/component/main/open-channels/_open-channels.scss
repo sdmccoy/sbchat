@@ -1,14 +1,13 @@
 @import '../../../style/_vars.scss';
 
 .open-channels-container{
-  outline: 1px solid black;
-  clear: both;
-  height: 70%;
+  height: 80%;
 
   .title{
     background-color: $color-primary;
     h5{
       width: 90%;
+      padding-left: 2%;
       color: $color-white;
     }
     i{

@@ -2,16 +2,12 @@
 
 .participant-list-container{
   outline: 1px solid black;
-  width: 25%;
   height: 70%;
-  float: right;
-  *{
-    margin: 1%;
-  }
   .title{
     background-color: $color-primary;
     h5{
       width: 88%;
+      padding-left: 2%;
       color: $color-white;
     }
     i{

@@ -2,9 +2,15 @@
 
 .chat-container{
   outline: 1px solid black;
-  width: 50%;
-  height: 100%;
 
+  .title{
+    background-color: $color-primary;
+    h5{
+      width: 90%;
+      color: $color-white;
+      padding-left: 1%;
+    }
+  }
 }
 
 .chat-submit{

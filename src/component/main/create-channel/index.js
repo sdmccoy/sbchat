@@ -52,7 +52,7 @@ class CreateChannel extends React.Component{
     return(
       <div className='create-channel-container'>
         <div className='title'>
-          <h5>Create a new Channel</h5>
+          <h5>CREATE A CHANNEL</h5>
         </div>
         <RaisedButton
           className='add-channel-button'
