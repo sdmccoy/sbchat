@@ -82,33 +82,26 @@ class Chat extends React.Component{
             messageList.map((message, i) => {
               return <div className='message' key={i}>
                 {user.userId === message.sender.userId ?
-                  <Card className='current-user-message'>
-                    <CardHeader
-                      title={message.sender.userId}
-                      avatar={message.sender.profileUrl}
-                    />
-                    <CardText>{message.message}</CardText>
-                    <CardActions className='cardaction-delete'>
-                      <i className="material-icons"
-                        onClick= {() => this.handleMessageDelete(message)}
-                      >
-                      delete_forever
-                      </i>
-                    </CardActions>
+                  <div className='current-user-message'>
+                    <img src={message.sender.profileUrl} />
+                    <h4>{message.sender.userId}</h4>
+                    <p>{message.message}</p>
+                    <i className="material-icons"
+                      onClick= {() => this.handleMessageDelete(message)}
+                    >
+                    delete_forever
+                    </i>
                     <UpdateMessageForm
                       message={message}
                       channel={this.state.currentChannel}
-                      showUpdateForm={this.state.showUpdateForm}
                     />
-                  </Card>
+                  </div>
                   :
-                  <Card className='other-user-message'>
-                    <CardHeader
-                      title={message.sender.userId}
-                      avatar={message.sender.profileUrl}
-                    />
-                    <CardText>{message.message}</CardText>
-                  </Card>
+                  <div className='other-user-message'>
+                    <img src={message.sender.profileUrl} />
+                    <h4>{message.sender.userId}</h4>
+                    <p>{message.message}</p>
+                  </div>
                 }
               </div>;
             })

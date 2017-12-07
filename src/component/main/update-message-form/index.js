@@ -51,7 +51,6 @@ class UpdateMessageForm extends React.Component{
         width: '2px',
       },
     };
-    console.log('thispropsSUF = ', this.props.showUpdateForm);
     return(
       <div className='update-message-form-container'>
 
@@ -74,10 +73,9 @@ class UpdateMessageForm extends React.Component{
             <FloatingActionButton   className="send-message-button" type="submit"
               mini={true}
               zDepth={0}
-              style={style.fab}
               onClick={() => this.handleMessageUpdate(this.props.message)}
             >
-              <i className="material-icons">send</i>
+              <i id='update-send' className="material-icons">send</i>
             </FloatingActionButton>
           </div>
           :
