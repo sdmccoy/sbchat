@@ -18,7 +18,7 @@ import * as client from '../../lib/sb-object.js';
 let sb = client.sb;
 
 //decorator tracking
-@track({page: 'signin-page'})
+@track({page: 'signin-page'}, {dispatchOnMount: (contextData) => ({event: 'signin-page-mounted'}) })
 class Signin extends React.Component{
   constructor(props){
     super(props);
