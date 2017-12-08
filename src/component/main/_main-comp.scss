@@ -3,15 +3,31 @@
   height: 100%;
 }
 
+.signin-container{
+  position: absolute;
+  width: 305px;
+  height: 305px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 //delete after dev
 .aside-left, .aside-right, .chat-container{
   outline: 1px solid black;
 }
 
+.appbar{
+  height: 10%;
+  margin: 0 0 1% 0;
+}
+
 .aside-left, .aside-right{
   width: 24.5%;
-  height: calc(786px*.9);
+  height: calc(768px*.9);
   float: left;
+  margin: 0 0 2% 0;
 }
 
 .aside-left{
@@ -24,6 +40,7 @@
 
 .chat-container{
   width: 48%;
-  height: calc(786px*.9);
-  margin: 0 1%;
+  height: calc(768px*.9);
+  float: left;
+  margin: 0 1% 2% 1%;
 }

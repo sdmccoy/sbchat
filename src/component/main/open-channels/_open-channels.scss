@@ -2,9 +2,18 @@
 
 .open-channels-container{
   height: 80%;
+  overflow: auto;
+
+  .open-channel{
+    width: 98%;
+    margin: 1%;
+    box-shadow: 1px 1px 1px $color-tertiary;
+  }
 
   .title{
     background-color: $color-secondary;
+    width: 98%;
+
     h5{
       width: 90%;
       padding-left: 2%;
@@ -19,8 +28,4 @@
   h6{
     font-style: italic;
   }
-}
-
-div.open-channel.div{
-  cursor: default;
 }

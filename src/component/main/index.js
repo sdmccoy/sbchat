@@ -11,7 +11,6 @@ class Main extends React.Component{
   render(){
     return(
       <div className='main-container'>
-        hello Main Component
         <Appbar />
         <aside className='aside-left'>
           <CreateChannel />

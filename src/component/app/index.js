@@ -23,7 +23,6 @@ class App extends React.Component{
       <Provider store={store}>
         <MuiThemeProvider>
           <div className='app-container'>
-            Hello World APP
             <Route exact path='/' component={Signin} />
             <Route exact path='/main' component={Main} />
           </div>

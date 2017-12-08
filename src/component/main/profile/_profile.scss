@@ -1,23 +1,29 @@
 @import '../../../style/_vars.scss';
 
 .profile-container{
-  height: 30%;
+  height: 40%;
 
   *{
     text-align: center;
-    margin: 1%;
+    width: 96%;
+    margin: 1% 2%;
   }
+}
 
-  h2{
-
-  }
+.avatar-container{
 
   img{
-    width: 100px;
-    height: 100px;
+    width: 50%;
+    height: 50%;
     border-radius: 51%;
-    margin: 0 136px;
+    margin: 0 25%;
   }
+}
 
-
+.profile-form{
+  margin: 0;
+  input, button{
+    width: 96%;
+    margin: 1% 2%;
+  }
 }

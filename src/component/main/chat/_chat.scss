@@ -16,7 +16,7 @@
 }
 
 .message-board{
-  overflow: scroll;
+  overflow: auto;
   height: 90%;
 }
 
@@ -54,9 +54,10 @@
 .chat-submit{
   position: absolute;
   bottom: 0;
+  margin: 1% 0;
 
   input{
-    width: 90%;
+    width: 87%;
     margin: 0 1%;
 
   }

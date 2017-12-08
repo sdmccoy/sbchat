@@ -7,6 +7,8 @@ import * as userActions from '../../../action/user.js';
 import track from 'react-tracking';
 //style
 import './_profile.scss';
+import Drawer from 'material-ui/Drawer';
+import RaisedButton from 'material-ui/RaisedButton';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -80,37 +82,52 @@ class Profile extends React.Component{
   }
 
   render(){
+    const style = {
+      drawer: {
+        margin: '0',
+      },
+    };
     //redirect after signout
     const {redirect} = this.state;
     if(redirect) {return <Redirect to='/'/>;}
 
     return(
       <div className='profile-container'>
-        <h2>{this.state.nickname}</h2>
-        <img src={this.state.profileUrl} />
-        <h3>{this.state.userId}</h3>
+        <h3>{this.state.nickname}</h3>
+        <div className='avatar-container'>
+          <img src={this.state.profileUrl} />
+        </div>
+        <h5>{this.state.userId}</h5>
         <button onClick={this.handleSignout}>Sign Out</button>
         <button onClick={this.handleShowProfileForm}>
         Edit Profile
         </button>
-        {!this.state.showProfileForm ?
-          <form onSubmit={this.handleSubmit}>
-            <input
-              name='nickname'
-              type='text'
-              placeholder='Nickname'
-              onChange={this.handleChange}
-              value={this.state.userID}
-            />
-            <input
-              name='profileUrl'
-              type='text'
-              placeholder='Profile Image Link'
-              onChange={this.handleChange}
-              value={this.state.userID}
-            />
-            <button className="edit-profile-button" type="submit">Submit</button>
-          </form>
+        {this.state.showProfileForm ?
+          <Drawer openSecondary={true} containerClassName='profile-form'
+          >
+            <form onSubmit={this.handleSubmit}>
+              <input
+                name='nickname'
+                type='text'
+                placeholder='Nickname'
+                onChange={this.handleChange}
+                value={this.state.userID}
+              />
+              <input
+                name='profileUrl'
+                type='text'
+                placeholder='Profile Image Link'
+                onChange={this.handleChange}
+                value={this.state.userID}
+              />
+              <RaisedButton className="edit-profile-button" type="submit">
+                Submit
+              </RaisedButton>
+              <RaisedButton className="cancel-edit-button" onClick={this.handleShowProfileForm}>
+                Cancel
+              </RaisedButton>
+            </form>
+          </Drawer>
           : undefined
         }
       </div>
