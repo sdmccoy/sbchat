@@ -41,13 +41,13 @@ class OpenChannels extends React.Component{
   }
 
   //user signs in first then make query for channels
-  // uncomment back in after dev session
-  // componentWillMount(){
-  //   openChannelListQuery.next((channels, error) => {
-  //     if(error) return console.error(error);
-  //     this.props.fetchOpenChannels(channels);
-  //   });
-  // }
+  componentWillMount(){
+    openChannelListQuery.next((channels, error) => {
+      if(error) return console.error(error);
+      this.props.fetchOpenChannels(channels);
+    });
+  }
+
   //set state for tracking prior to entrance
   _enterChannel(enteredChannel){
     //call back for async issue

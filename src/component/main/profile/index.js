@@ -1,9 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import SendBird from 'sendbird';
 import * as userActions from '../../../action/user.js';
 //tracking
 import track from 'react-tracking';
+//style
+import './_profile.scss';
 
 //importing sb object
 import * as client from '../../../lib/sb-object.js';
@@ -18,11 +21,18 @@ class Profile extends React.Component{
       showProfileForm: false,
       nickname: '',
       profileUrl: '',
+      userId: '',
+      redirect: false,
     };
     this.handleShowProfileForm = this.handleShowProfileForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
+  }
+
+  //component mounts before props are sent, CDM fixes this
+  componentDidMount(){
+    this.setState({nickname: this.props.user.nickname, profileUrl: this.props.user.profileUrl, userId: this.props.user.userId});
   }
 
   //toggle showing the update profile form
@@ -66,15 +76,20 @@ class Profile extends React.Component{
       // You are disconnected from SendBird.
       console.log('user signed out');
     });
+    this.setState({redirect: true});
   }
 
   render(){
+    //redirect after signout
+    const {redirect} = this.state;
+    if(redirect) {return <Redirect to='/'/>;}
+
     return(
       <div className='profile-container'>
-        profile below here
-        <h2>{this.props.user[0].nickname}</h2>
-        <img src={this.props.user[0].profileUrl} />
-        <h3>{this.props.user[0].userId}</h3>
+        <h2>{this.state.nickname}</h2>
+        <img src={this.state.profileUrl} />
+        <h3>{this.state.userId}</h3>
+        <button onClick={this.handleSignout}>Sign Out</button>
         <button onClick={this.handleShowProfileForm}>
         Edit Profile
         </button>
@@ -98,7 +113,6 @@ class Profile extends React.Component{
           </form>
           : undefined
         }
-        <button onClick={this.handleLogout}>Sign Out</button>
       </div>
     );
   }

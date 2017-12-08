@@ -1,0 +1,23 @@
+@import '../../../style/_vars.scss';
+
+.profile-container{
+  height: 30%;
+
+  *{
+    text-align: center;
+    margin: 1%;
+  }
+
+  h2{
+
+  }
+
+  img{
+    width: 100px;
+    height: 100px;
+    border-radius: 51%;
+    margin: 0 136px;
+  }
+
+
+}

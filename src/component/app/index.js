@@ -19,14 +19,13 @@ const store = appStoreCreate();
 class App extends React.Component{
 
   render(){
-    //change Main path to /main after dev session
     return(
       <Provider store={store}>
         <MuiThemeProvider>
           <div className='app-container'>
             Hello World APP
             <Route exact path='/' component={Signin} />
-            <Route exact path='/' component={Main} />
+            <Route exact path='/main' component={Main} />
           </div>
         </MuiThemeProvider>
       </Provider>
