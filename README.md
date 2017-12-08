@@ -56,18 +56,23 @@ Front-End application utilizing the SendBird API to implement a live chat room.
   - Create your own APP ID & API TOKEN from [SendBird Signin Dashboard](https://dashboard.sendbird.com/auth/signin "SendBird Signin")
 
     ```javascript
-    APP_ID='your-secret-app-id'```
+    APP_ID='your-secret-app-id'
+    ```
 
     ```javascript
-    API_TOKEN='your-secret-api-token'```
+    API_TOKEN='your-secret-api-token'
+    ```
+
   - Include this for the platform API call
 
     ```javascript
-  API_CONNECT_URL='https://api.sendbird.com/v3/open_channels/'```
+    API_CONNECT_URL='https://api.sendbird.com/v3/open_channels/'
+    ```
   - Switch this to 'production' when ready for a deployed site
 
     ```javascript
-    NODE_ENV='dev'```
+    NODE_ENV='dev'
+    ```
 
 ## Launch Development
 
@@ -83,7 +88,7 @@ Front-End application utilizing the SendBird API to implement a live chat room.
 
 ## APPLICATION USE
 
-### Sign in
+### Sign In
 
 - Type in a userId
   - SendBird checks their own database for duplicate users
@@ -93,7 +98,7 @@ Front-End application utilizing the SendBird API to implement a live chat room.
 
   - <img src='./src/assets/loginlp.png' width='400px' height='400px'/>
 
-### Main Landing page
+### Main Landing Page
 - Application will redirect to the /main route and load the chat componenents
 
 - <img src='./src/assets/chatlp.png' width='900px' height='400px'/>
@@ -106,7 +111,7 @@ Front-End application utilizing the SendBird API to implement a live chat room.
   - PROFILE component with current user information.
   - PARTICIPANT LIST component with no participants until you enter a channel
 
-### Create a Channel component
+### Create a Channel Component
 
 - Button to show the create a channel form
   - <img src='./src/assets/caccomp.png' width='250px' height='100px'/>
@@ -130,7 +135,7 @@ Front-End application utilizing the SendBird API to implement a live chat room.
 
 ### Profile Component
 
-- Profile component with
+- Profile component with (in top down order)
   - nickname (if available)
   - avatar (random photo from sendbird if link is not provided)
   - userId
