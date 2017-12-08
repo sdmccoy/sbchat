@@ -10,9 +10,6 @@ import bluorbitlogo from '../../assets/bluorbitlogo.png';
 //style
 import './_signin.scss';
 
-//remove after dev session
-import * as openChannelActions from '../../action/open-channel.js';
-
 //importing sb object
 import * as client from '../../lib/sb-object.js';
 let sb = client.sb;
@@ -45,7 +42,6 @@ class Signin extends React.Component{
     //set to current instance to pass in props & state
     let currentUser = this;
 
-    //change userID back to currentUser.state.userID after dev
     sb.connect(currentUser.state.userID, __API_TOKEN__, (user, error) => {
       if(error) return console.error(error);
       //set user state to app store through redux
@@ -58,18 +54,10 @@ class Signin extends React.Component{
 
 
   render(){
-    //delete below after dev session
-    if(this.state.redirect){
-      const openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
+    //redirect after signin
+    const {redirect} = this.state;
+    if(redirect) {return <Redirect to='/main'/>;}
 
-      openChannelListQuery.next((channels, error) => {
-        if(error) return console.error(error);
-        this.props.fetchOpenChannels(channels);
-      });
-    }
-    //uncomment after dev
-    // const {redirect} = this.state;
-    // if(redirect) {return <Redirect to='/main'/>;}
     return(
       <div className='signin-container'>
         <img src={bluorbitlogo} />
@@ -96,8 +84,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   userSignin: user => dispatch(userActions.userSignin(user)),
-  //delete after dev session
-  fetchOpenChannels: channels => dispatch(openChannelActions.fetchOpenChannels(channels)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin);

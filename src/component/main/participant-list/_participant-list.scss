@@ -1,20 +1,23 @@
 @import '../../../style/_vars.scss';
 
 .participant-list-container{
-  outline: 1px solid black;
-  height: 70%;
+  height: 50%;
+
   .title{
     background-color: $color-secondary;
+
     h5{
       width: 88%;
       padding-left: 2%;
       color: $color-white;
     }
+
     i{
       width: 8%;
       text-align: right;
     }
   }
+
   h6{
     font-style: italic;
   }

@@ -1,11 +1,11 @@
 @import '../../../style/_vars.scss';
 
 .chat-container{
-  outline: 1px solid black;
   position: relative;
 
   .title{
     background-color: $color-secondary;
+    border-radius: .5em .5em 0 0;
 
     h5{
       width: 90%;
@@ -16,7 +16,7 @@
 }
 
 .message-board{
-  overflow: scroll;
+  overflow: auto;
   height: 90%;
 }
 
@@ -54,9 +54,10 @@
 .chat-submit{
   position: absolute;
   bottom: 0;
+  margin: 1% 0;
 
   input{
-    width: 90%;
+    width: 87%;
     margin: 0 1%;
 
   }

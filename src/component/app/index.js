@@ -14,19 +14,17 @@ import * as trackerActions from '../../action/tracker.js';
 const store = appStoreCreate();
 @track({}, { dispatch: (data) => {
   return store.dispatch(trackerActions.addTrackEvent(data));
-}
+},
 })
 class App extends React.Component{
 
   render(){
-    //change Main path to /main after dev session
     return(
       <Provider store={store}>
         <MuiThemeProvider>
           <div className='app-container'>
-            Hello World APP
             <Route exact path='/' component={Signin} />
-            <Route exact path='/' component={Main} />
+            <Route exact path='/main' component={Main} />
           </div>
         </MuiThemeProvider>
       </Provider>

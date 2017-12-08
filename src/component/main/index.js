@@ -9,11 +9,8 @@ import './_main-comp.scss';
 
 class Main extends React.Component{
   render(){
-    //move to end bottom after dev session
-    // <Profile />
     return(
       <div className='main-container'>
-        hello Main Component
         <Appbar />
         <aside className='aside-left'>
           <CreateChannel />
@@ -21,6 +18,7 @@ class Main extends React.Component{
         </aside>
         <Chat />
         <aside className='aside-right'>
+          <Profile />
           <ParticipantList />
         </aside>
       </div>

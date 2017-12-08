@@ -9,7 +9,9 @@
     "semi": ["error", "always"]
   },
   "plugins": [ "react" ],
+  "parser": "babel-eslint",
   "parserOptions": {
+    "ecmaVersion": 7,
     "sourceType": "module",
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,

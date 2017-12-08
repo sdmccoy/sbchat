@@ -15,7 +15,8 @@ import * as client from '../../../lib/sb-object.js';
 let sb = client.sb;
 
 //decorator tracking
-@track({page: 'chat-component'}, {dispatchOnMount: (contextData) => ({event: 'chat-component-mounted'}) })
+@track({page: 'chat-component'}, {dispatchOnMount: (contextData) => ({event: 'chat-component-mounted'}),
+})
 class Chat extends React.Component{
   constructor(props){
     super(props);
