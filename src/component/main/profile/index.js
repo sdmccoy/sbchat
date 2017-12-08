@@ -9,7 +9,8 @@ import track from 'react-tracking';
 import * as client from '../../../lib/sb-object.js';
 let sb = client.sb;
 
-@track({page: 'profile-component'}, {dispatchOnMount: (contextData) => ({event: 'profile-component-mounted'}) })
+@track({page: 'profile-component'}, {dispatchOnMount: (contextData) => ({event: 'profile-component-mounted'}),
+})
 class Profile extends React.Component{
   constructor(props){
     super(props);
@@ -27,7 +28,7 @@ class Profile extends React.Component{
   //toggle showing the update profile form
   //track show form click event
   @track((undefined, state) => {
-    return {action: state.showProfileForm ? 'click-profileform-minimize' : 'click-profileform-expand'}
+    return {action: state.showProfileForm ? 'click-profileform-minimize' : 'click-profileform-expand'};
   })
   handleShowProfileForm(){
     this.state.showProfileForm ? this.setState({showProfileForm: false}) : this.setState({showProfileForm: true});
@@ -41,7 +42,7 @@ class Profile extends React.Component{
   //update profile from form
   //track update action with userId
   @track((props, state) => {
-    return {action: `click-update-profile, id: ${props.user.userId}`}
+    return {action: `click-update-profile, id: ${props.user.userId}`};
   })
   handleSubmit(e){
     e.preventDefault();

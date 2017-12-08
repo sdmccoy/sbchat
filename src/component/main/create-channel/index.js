@@ -14,7 +14,8 @@ import * as client from '../../../lib/sb-object.js';
 let sb = client.sb;
 
 //decorator tracking
-@track({page: 'createchannel-component'}, {dispatchOnMount: (contextData) => ({event: 'createchannel-component-mounted'}) })
+@track({page: 'createchannel-component'}, {dispatchOnMount: (contextData) => ({event: 'createchannel-component-mounted'}),
+})
 class CreateChannel extends React.Component{
   constructor(props){
     super(props);
@@ -33,7 +34,7 @@ class CreateChannel extends React.Component{
   //track show form click
   //TODO: fix cancel gets logged after user submits new channel
   @track((undefined, state) => {
-  return {action: state.showChannelForm ? 'click-createcchannel-cancel' : 'click-createchannel-form'}
+    return {action: state.showChannelForm ? 'click-createcchannel-cancel' : 'click-createchannel-form'};
   })
   handleShowChannelForm(){
     this.setState({showChannelForm: !this.state.showChannelForm});
@@ -46,7 +47,7 @@ class CreateChannel extends React.Component{
   //create channel from form
   //track submit new channel
   @track((undefined, state) => {
-  return {action: `click-submit-newchannel: ${state.channelName}`}
+    return {action: `click-submit-newchannel: ${state.channelName}`};
   })
   handleSubmit(e){
     e.preventDefault();

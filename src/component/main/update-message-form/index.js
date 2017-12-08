@@ -8,7 +8,8 @@ import './_update-message-form.scss';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {CardActions} from 'material-ui/Card';
 
-@track({page: 'updatemessage-component'}, {dispatchOnMount: (contextData) => ({event: 'updatemessage-component-mounted'}) })
+@track({page: 'updatemessage-component'}, {dispatchOnMount: (contextData) => ({event: 'updatemessage-component-mounted'}),
+})
 class UpdateMessageForm extends React.Component{
   constructor(props){
     super(props);
@@ -38,7 +39,7 @@ class UpdateMessageForm extends React.Component{
   //update the current message with the data
   //track the update event with the msg id
   @track((props, state) => {
-    return {action: `update-message, id: ${props.message.messageId}`}
+    return {action: `update-message, id: ${props.message.messageId}`};
   })
   handleMessageUpdate(message){
 

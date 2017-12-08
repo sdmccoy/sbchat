@@ -14,7 +14,7 @@ import * as trackerActions from '../../action/tracker.js';
 const store = appStoreCreate();
 @track({}, { dispatch: (data) => {
   return store.dispatch(trackerActions.addTrackEvent(data));
-}
+},
 })
 class App extends React.Component{
 

@@ -22,7 +22,8 @@ let sb = client.sb;
 const openChannelListQuery = sb.OpenChannel.createOpenChannelListQuery();
 
 //decorator tracking
-@track({page: 'openchannels-component'}, {dispatchOnMount: (contextData) => ({event: 'openchannels-component-mounted'}) })
+@track({page: 'openchannels-component'}, {dispatchOnMount: (contextData) => ({event: 'openchannels-component-mounted'}),
+})
 class OpenChannels extends React.Component{
   constructor(props){
     super(props);
@@ -49,15 +50,16 @@ class OpenChannels extends React.Component{
   // }
   //set state for tracking prior to entrance
   _enterChannel(enteredChannel){
-
-    this.state.channel = enteredChannel;
-    this.enterChannel(this.state.channel);
+    //call back for async issue
+    this.setState({channel: enteredChannel}, () => {
+      this.enterChannel(this.state.channel);
+    });
   }
 
   //user enters channel
   //track when user attempts to enter channel
   @track((undefined, state) => {
-  return {action: `enter-attempt-to-channel: ${state.channel.name}`}
+    return {action: `enter-attempt-to-channel: ${state.channel.name}`};
   })
   enterChannel(channel){
 
@@ -120,7 +122,7 @@ class OpenChannels extends React.Component{
   //toggle the channel delete buttons
   //track user clicking the delete icon
   @track((undefined, state) => {
-    return {action: state.showChannelDelete ? 'click-deletechannel-minimize' : 'click-deletechannel-expand'}
+    return {action: state.showChannelDelete ? 'click-deletechannel-minimize' : 'click-deletechannel-expand'};
   })
   showChannelDelete(){
     this.setState({showChannelDelete: !this.state.showChannelDelete});

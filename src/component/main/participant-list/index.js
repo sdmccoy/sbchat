@@ -8,7 +8,8 @@ import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 
 //decorator tracking
-@track({page: 'participantlist-component'}, {dispatchOnMount: (contextData) => ({event: 'participantlist-component-mounted'}) })
+@track({page: 'participantlist-component'}, {dispatchOnMount: (contextData) => ({event: 'participantlist-component-mounted'}),
+})
 class ParticipantList extends React.Component{
 
   render(){
