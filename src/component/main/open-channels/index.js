@@ -75,14 +75,14 @@ class OpenChannels extends React.Component{
         let ChannelHandler = new sb.ChannelHandler();
 
         //sending message to recieving socket handler
-        ChannelHandler.onMessageReceived = function(channel, message){
+        ChannelHandler.onMessageReceived = (channel, message) => {
           //set app store for receiving user socket to see sent msg
           addNewMessage(message);
         };
 
         sb.addChannelHandler('received message', ChannelHandler);
 
-        ChannelHandler.onMessageUpdated = function(channel, message){
+        ChannelHandler.onMessageUpdated = (channel, message) => {
           //set app store for receiving user socket to see sent msg
           updateMessage(message);
         };

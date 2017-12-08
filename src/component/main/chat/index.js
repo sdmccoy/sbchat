@@ -73,7 +73,17 @@ class Chat extends React.Component{
     channel.deleteMessage(message, function(response, error){
 
       if (error) return console.error(error);
-      deleteMessage(message);
+
+      let ChannelHandler = new sb.ChannelHandler();
+
+      ChannelHandler.onMessageDeleted = function(channel, message){
+        //set app store for receiving user socket to see sent msg
+        deleteMessage(message);
+      };
+
+      sb.addChannelHandler('message deleted', ChannelHandler);
+
+
     });
   }
 

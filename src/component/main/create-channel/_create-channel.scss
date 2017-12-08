@@ -19,3 +19,15 @@
     width: 96% !important;
   }
 }
+
+.add-channel-form{
+  margin: 0;
+  input, button{
+    width: 96%;
+    margin: 1% 2% !important;
+  }
+  .create-channel-button, .cancel-channel-button{
+    width: 96%;
+    margin: 1% 2% !important;
+  }
+}
