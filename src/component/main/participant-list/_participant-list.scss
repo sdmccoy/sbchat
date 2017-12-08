@@ -1,7 +1,6 @@
 @import '../../../style/_vars.scss';
 
 .participant-list-container{
-  outline: 1px solid black;
   height: 50%;
 
   .title{
@@ -18,7 +17,7 @@
       text-align: right;
     }
   }
-  
+
   h6{
     font-style: italic;
   }

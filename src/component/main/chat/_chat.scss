@@ -1,11 +1,11 @@
 @import '../../../style/_vars.scss';
 
 .chat-container{
-  outline: 1px solid black;
   position: relative;
 
   .title{
     background-color: $color-secondary;
+    border-radius: .5em .5em 0 0;
 
     h5{
       width: 90%;

@@ -93,6 +93,9 @@ class Profile extends React.Component{
 
     return(
       <div className='profile-container'>
+        <div className='title'>
+          <h5>PROFILE</h5>
+        </div>
         <h3>{this.state.nickname}</h3>
         <div className='avatar-container'>
           <img src={this.state.profileUrl} />
