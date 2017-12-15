@@ -76,7 +76,7 @@ class CreateChannel extends React.Component{
         + Channel
         </RaisedButton>
         {this.state.showChannelForm ?
-          <Drawer>
+          <Drawer containerClassName='add-channel-form'>
             <form onSubmit={this.handleSubmit}>
               <input
                 name='channelName'

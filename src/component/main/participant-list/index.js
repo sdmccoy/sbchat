@@ -38,7 +38,7 @@ class ParticipantList extends React.Component{
             </Chip>;
           })
           :
-          <h6>No other participants, invite some friends!</h6>
+          <h6>Enter a channel to see some buddies!</h6>
         }
       </div>
     );
